@@ -7,6 +7,17 @@
 <div>
   <Post poster={"Siam"} post={"what the hell this is?"} />
   <Post poster={"Ashraf"} post={"what am I talking about right now?"} />
+  <Post poster={"Ashraf"} post={"what am I talking about right now?"} />
+  <Post poster={"Ashraf"} post={"what am I talking about right now?"} />
+  <Post poster={"Ashraf"} post={"what am I talking about right now?"} />
+  <Post poster={"Ashraf"} post={"what am I talking about right now?"} />
+  <Post poster={"Ashraf"} post={"what am I talking about right now?"} />
+  <Post poster={"Ashraf"} post={"what am I talking about right now?"} />
+  <Post poster={"Ashraf"} post={"what am I talking about right now?"} />
+  <Post poster={"Ashraf"} post={"what am I talking about right now?"} />
+  <Post poster={"Ashraf"} post={"what am I talking about right now?"} />
+  <Post poster={"Ashraf"} post={"what am I talking about right now?"} />
+  <Post poster={"Ashraf"} post={"what am I talking about right now?"} />
 </div>
 
 <style>

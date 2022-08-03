@@ -17,7 +17,7 @@
 <Router>
   <div class="w-screen h-screen bg-slate-900 text-slate-100">
     <Nav {routes} />
-    <div>
+    <div class="py-20">
       <Route path="/">
         <Show />
       </Route>
