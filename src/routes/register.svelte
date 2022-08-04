@@ -5,6 +5,16 @@
   let dob = "";
   let username = "";
   let password = "";
+  let other_pass = "";
+
+  let matched = true;
+  let color = "green";
+
+  $: matched = password === other_pass ? true : false;
+  $: {
+    color = matched ? "green" : "red";
+    console.log(color, password, other_pass);
+  }
 </script>
 
 <form class="w-1/3 mx-auto pt-10">
@@ -110,21 +120,22 @@
       id="password"
       class="bg-gray-50 font-Roboto border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       placeholder="•••••••••"
+      bind:value={password}
       required
     />
   </div>
   <div class="mb-6">
     <label
-      for="confirm_password"
-      class="block mb-2 font-Roboto text-sm font-medium text-gray-900 dark:text-gray-300"
+      for="match"
+      class="block mb-2 font-Roboto text-sm font-medium text-gray-700 dark:text-gray-500"
       >Confirm password</label
     >
     <input
       type="password"
       id="confirm_password"
-      class="bg-gray-50 font-Roboto border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      class="bg-gray-50 font-Roboto border border-{color}-500 text-{color}-900 text-sm rounded-lg focus:ring-{color}-500 focus:border-{color}-500 block w-full p-2.5 dark:bg-gray-700 dark:border-{color}-500 dark:placeholder-{color}-700 dark:text-{color}-400 dark:focus:ring-{color}-500 dark:focus:border-{color}-500"
       placeholder="•••••••••"
-      bind:value={password}
+      bind:value={other_pass}
       required
     />
   </div>
