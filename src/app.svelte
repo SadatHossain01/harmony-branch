@@ -5,12 +5,14 @@
   import Feed from "./routes/feed.svelte";
   import Login from "./routes/login.svelte";
   import Register from "./routes/register.svelte";
+  import Contact from "./routes/contact.svelte";
 
   const routes: Map<string, string> = new Map([
     ["About", "/about"],
-    ["Feed", "/"],
     ["Login", "/login"],
     ["Register", "/register"],
+    ["Feed", "/"],
+    // ["Contact Us", "/contact"],
   ]);
 </script>
 
@@ -30,6 +32,9 @@
       <Route path="/register">
         <Register />
       </Route>
+      <!-- <Route path="/contact">
+        <Contact />
+      </Route> -->
     </div>
   </div>
 </Router>
