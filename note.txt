@@ -1,2 +1,0 @@
-add the following line to tailwind.css which is in node-modules
-@import url('https://fonts.googleapis.com/css2?family=Hahmlet:wght@900&family=Rampart+One&display=swap');
