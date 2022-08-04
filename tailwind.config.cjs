@@ -6,6 +6,7 @@ module.exports = {
       fontFamily: {
        Hahmlet: ["Hahmlet", "serif"],
        Rampart: ["Rampart One", "cursive"],
+       Rubik: ["Rubik", "sans-serif"],
       },
     },
   },
