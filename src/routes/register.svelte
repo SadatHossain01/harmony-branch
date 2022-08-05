@@ -7,13 +7,17 @@
   let password = "";
   let other_pass = "";
 
-  let matched = true;
   let color = "green";
+  let matched_message = "Passwords match";
 
-  $: matched = password === other_pass ? true : false;
   $: {
-    color = matched ? "green" : "red";
-    console.log(color, password, other_pass);
+    if (password === other_pass) {
+      matched_message = "Passwords match";
+      color = "green";
+    } else {
+      matched_message = "Passwords do not match";
+      color = "red";
+    }
   }
 </script>
 
@@ -133,12 +137,16 @@
     <input
       type="password"
       id="confirm_password"
-      class="bg-gray-50 font-Roboto border border-{color}-500 text-{color}-900 text-sm rounded-lg focus:ring-{color}-500 focus:border-{color}-500 block w-full p-2.5 dark:bg-gray-700 dark:border-{color}-500 dark:placeholder-{color}-700 dark:text-{color}-400 dark:focus:ring-{color}-500 dark:focus:border-{color}-500"
+      class="bg-gray-50 font-Roboto border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       placeholder="•••••••••"
       bind:value={other_pass}
       required
     />
   </div>
+  <!-- if matched then show text in green, else in red -->
+  <p class="mt-2 text-sm text-{color}-600 dark:text-{color}-500 mb-2">
+    <span class="font-medium font-Roboto">{matched_message}</span>
+  </p>
   <div class="flex items-start mb-6">
     <div class="flex items-center h-5">
       <input
