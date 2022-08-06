@@ -14,7 +14,7 @@
 </script>
 
 <div
-  class="flex items-center font-Roboto shadow-md rounded-lg border hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+  class="flex items-center font-Roboto shadow-md rounded-lg border h-100 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
 >
   <a href={group.group_link}>
     <img class="rounded-t-lg object-fill" src={group.image_link} alt="" />
