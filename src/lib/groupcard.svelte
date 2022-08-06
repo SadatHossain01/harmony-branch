@@ -1,36 +1,40 @@
 <script lang="ts">
-  let name = "Team Seven";
-  let intro =
-    "One byte lighter we design, one moment speedier we code, one pixel brighter we turn the universe.";
-  let institution = "Dhaka University";
-  let image_link = "/docs/images/blog/image-1.jpg";
-  let department = "CSE";
-  let group_link = "";
-  let batch = "17";
+  //declare an object with name, intro, institution, image_link, department, group_link and batch
+  export let group = {
+    id: 1,
+    name: "লৌহ",
+    intro:
+      "One byte lighter we design, one moment speedier we code, one pixel brighter we turn the universe.",
+    institution: "BUET",
+    image_link: "https://picsum.photos/200/300",
+    department: "CSE",
+    group_link: "",
+    batch: "17",
+  };
 </script>
 
 <div
-  class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
+  class="flex items-center font-Roboto shadow-md rounded-lg border hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
 >
-  <a href={group_link}>
-    <img class="rounded-t-lg" src={image_link} alt="" />
+  <a href={group.group_link}>
+    <img class="rounded-t-lg object-fill" src={group.image_link} alt="" />
   </a>
   <div class="p-5">
-    <a href={group_link}>
+    <a href={group.group_link}>
       <h5
         class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
       >
-        {name}
+        {group.name}
       </h5>
     </a>
     <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-      {intro}
+      {group.intro}
     </p>
     <a
-      href={group_link}
+      href={group.group_link}
       class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
     >
-      Read more
+      Visit
       <svg
         aria-hidden="true"
         class="ml-2 -mr-1 w-4 h-4"
