@@ -13,8 +13,6 @@ module.exports = {
     },
   },
 
-  plugins: [
-    require('flowbite/plugin')
-  ],
+  plugins: [],
   darkMode: 'class',
 };
