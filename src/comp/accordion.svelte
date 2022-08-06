@@ -9,6 +9,7 @@
     "p-5 border border-t-0 border-gray-200 dark:border-gray-700";
   export let isOpen: boolean = false;
   export let color: boolean = false;
+  export let isLast: boolean = false;
 
   export let iconClass: string =
     "text-gray-500 sm:w-6 sm:h-6 dark:text-gray-300";
@@ -60,7 +61,7 @@
 </h2>
 {#if isOpen}
   <div transition:slide={{ duration: 500 }}>
-    <div class={slotClass}>
+    <div class:rounded-b-xl={isLast} class={slotClass}>
       <slot name="body" />
     </div>
   </div>
