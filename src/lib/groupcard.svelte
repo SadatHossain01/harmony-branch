@@ -12,30 +12,26 @@
   };
 </script>
 
-<a
-  href={group.group_link}
-  class="flex font-Roboto items-center h-full shadow-md rounded-lg border hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+<div
+  class="flex font-Roboto items-center h-full shadow-md rounded-lg border hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 hover:cursor-pointer"
+  on:click={() => (window.location.pathname = "{group.group_link}")}
 >
-  <div
-    class="flex items-center h-full shadow-md rounded-lg border hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
-  >
-    <div class="ml-4 flex-none overflow-hidden">
-      <img
-        class="object-cover w-20 h-20 rounded-2xl shadow-lg"
-        src={group.image_link}
-        alt=""
-      />
-    </div>
-
-    <div class="p-5">
-      <h5
-        class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
-      >
-        {group.name}
-      </h5>
-      <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-        {group.intro}
-      </p>
-    </div>
+  <div class="ml-4 flex-none overflow-hidden">
+    <img
+      class="object-cover w-20 h-20 rounded-2xl shadow-lg"
+      src={group.image_link}
+      alt=""
+    />
   </div>
-</a>
+
+  <div class="p-5">
+    <h5
+      class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+    >
+      {group.name}
+    </h5>
+    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+      {group.intro}
+    </p>
+  </div>
+</div>
