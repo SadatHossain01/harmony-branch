@@ -14,11 +14,16 @@
 </script>
 
 <div
-  class="flex items-center font-Roboto shadow-md rounded-lg border h-100 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+  class="flex items-center h-40 shadow-md rounded-lg border hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
 >
-  <a href={group.group_link}>
-    <img class="rounded-t-lg object-fill" src={group.image_link} alt="" />
-  </a>
+  <div class="ml-4 flex-none overflow-hidden">
+    <img
+      class="object-cover w-20 h-20 rounded-2xl shadow-lg"
+      src={group.image_link}
+      alt=""
+    />
+  </div>
+
   <div class="p-5">
     <a href={group.group_link}>
       <h5
