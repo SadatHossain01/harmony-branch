@@ -3,7 +3,7 @@
   import AccordionItem from "../lib/accordionitem.svelte";
 </script>
 
-//this is without using flowbite-svelte
+<!-- //this is without using flowbite-svelte -->
 
 <div class="bg-slate-900 p-10 my-20">
   <p class="font-Raleway md:text-5xl sm:text-lg grid place-items-center py-10">
