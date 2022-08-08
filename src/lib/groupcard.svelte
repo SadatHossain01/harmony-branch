@@ -10,12 +10,10 @@
     group_link: "",
     batch: "",
   };
-  let hover_style = " hover:bg-gray-100 dark:hover:bg-gray-700";
 </script>
 
 <div
-  class={"font-Roboto flex h-full flex-row rounded-lg border shadow-md hover:cursor-pointe dark:border-gray-700 dark:bg-gray-80 px-3 py-5 gap-5" +
-    hover_style}
+  class="font-Roboto flex h-full flex-row shadow-md rounded-lg border hover:cursor-pointer dark:border-gray-700 dark:bg-gray-80 px-3 py-5 gap-5 hover:bg-gray-100 dark:hover:bg-gray-700"
   on:click={() => (window.location.pathname = "{group.group_link}")}
 >
   <div class="ml-4 flex-none overflow-hidden my-auto">
