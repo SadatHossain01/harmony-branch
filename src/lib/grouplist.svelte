@@ -288,7 +288,7 @@
     </div>
   </div>
   <div
-    class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 m-3 w-4/6 mx-auto auto-rows-fr"
+    class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 m-3 w-4/6 mx-auto auto-rows-fr place-items-center"
   >
     {#each showable_groups as group}
       <GroupCard {group} />
