@@ -11,28 +11,28 @@
   const maxlength = 140;
 
   //declare an array of 20 users with id and different names
-  const users = [
-    { id: 1, name: "John Doe" },
-    { id: 2, name: "Jane Doe" },
-    { id: 3, name: "Jack Doe" },
-    { id: 4, name: "Jill Doe" },
-    { id: 5, name: "Joe Doe" },
-    { id: 6, name: "Jenny Doe" },
-    { id: 7, name: "Juan Doe" },
-    { id: 8, name: "Jenny Doe" },
-    { id: 9, name: "Juan Doe" },
-    { id: 10, name: "Jenny Doe" },
-    { id: 11, name: "Juan Doe" },
-    { id: 12, name: "Jenny Doe" },
-    { id: 13, name: "Juan Doe" },
-    { id: 14, name: "Jenny Doe" },
-    { id: 15, name: "Juan Doe" },
-    { id: 16, name: "Jenny Doe" },
-    { id: 17, name: "Juan Doe" },
-    { id: 18, name: "Jenny Doe" },
-    { id: 19, name: "Juan Doe" },
-    { id: 20, name: "Jenny Doe" },
-  ];
+  // const users = [
+  //   { id: 1, name: "John Doe" },
+  //   { id: 2, name: "Jane Doe" },
+  //   { id: 3, name: "Jack Doe" },
+  //   { id: 4, name: "Jill Doe" },
+  //   { id: 5, name: "Joe Doe" },
+  //   { id: 6, name: "Jenny Doe" },
+  //   { id: 7, name: "Juan Doe" },
+  //   { id: 8, name: "Jenny Doe" },
+  //   { id: 9, name: "Juan Doe" },
+  //   { id: 10, name: "Jenny Doe" },
+  //   { id: 11, name: "Juan Doe" },
+  //   { id: 12, name: "Jenny Doe" },
+  //   { id: 13, name: "Juan Doe" },
+  //   { id: 14, name: "Jenny Doe" },
+  //   { id: 15, name: "Juan Doe" },
+  //   { id: 16, name: "Jenny Doe" },
+  //   { id: 17, name: "Juan Doe" },
+  //   { id: 18, name: "Jenny Doe" },
+  //   { id: 19, name: "Juan Doe" },
+  //   { id: 20, name: "Jenny Doe" },
+  // ];
 
   function add_group() {
     //write stuffs here...
@@ -46,7 +46,7 @@
   <Grouplist />
   <!-- drawer init and show -->
   <button
-    class="relative text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg lg:ml-40 ml-10 text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+    class="absolute top-20 left-20 mt-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg lg:ml-40 ml-10 text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
     type="button"
     data-drawer-target="drawer-form"
     data-drawer-show="drawer-form"
