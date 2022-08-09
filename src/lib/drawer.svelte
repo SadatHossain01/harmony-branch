@@ -23,7 +23,7 @@
 
   function slide(
     node,
-    { delay = 0, duration = 400, easing = cubicOut, axis = transition_axis }
+    { delay = 0, duration = 350, easing = cubicOut, axis = transition_axis }
   ) {
     const style = getComputedStyle(node);
     const opacity = +style.opacity;
@@ -78,6 +78,7 @@
 </script>
 
 <!-- drawer init and show -->
+<svelte:window on:click|stopPropagation={() => (open = false)} />
 <div class="text-center p-10">
   <button
     class={btn_class}
@@ -85,7 +86,7 @@
     data-drawer-target="drawer-contact"
     data-drawer-show="drawer-contact"
     aria-controls="drawer-contact"
-    on:click={toggle}
+    on:click|stopPropagation={toggle}
   >
     {btn_text}
   </button>
