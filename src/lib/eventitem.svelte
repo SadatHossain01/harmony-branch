@@ -77,7 +77,7 @@
   }
 </script>
 
-<li class="mb-10 ml-6">
+<li class="mb-10 ml-6 dark:hover:bg-gray-800 rounded-lg p-3">
   <span
     class="flex absolute -left-3 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900"
   >
