@@ -78,7 +78,7 @@
 </script>
 
 <!-- drawer init and show -->
-<div class="text-center">
+<div class="text-center p-10">
   <button
     class={btn_class}
     type="button"
