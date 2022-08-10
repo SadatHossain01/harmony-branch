@@ -2,18 +2,15 @@
   import Grouplist from "../lib/grouplist.svelte";
   import Drawer from "../lib/drawer.svelte";
   import FaIcon from "../lib/faIcon.svelte";
-  import UserForSuggestion from "../lib/user_for_suggestion.svelte";
 
   let draweropen: boolean = false;
   let name: string = "";
-  let department: string = "";
-  let institution: string = "";
   let intro: string = "";
   const maxlength = 140;
 
   let filteredUsers = [];
   let searchInput;
-  let search = "";
+  let search_term = "";
   let highlightedIndex = null;
 
   // declare an array of 20 users with id and different names
@@ -43,39 +40,49 @@
 
   let added_users = [];
 
-  function add_group() {
+  function add_user(user) {
+    console.log("user added", user.name);
+    added_users.push(user);
+    //set this user's added to true
+    users.forEach((u) => {
+      if (u.id == user.id) {
+        u.added = true;
+      }
+    });
+    search_term = "";
+  }
+
+  function create_group() {
     //write stuffs here...
     // reload the group list maybe
   }
 
-  const makeMatchBold = (str) => {
-    // replace part of (country name === inputValue) with strong tags
-    let matched = str.substring(0, searchInput.length);
-    let makeBold = `<strong>${matched}</strong>`;
-    let boldedMatch = str.replace(matched, makeBold);
-    return boldedMatch;
-  };
-
-  const removeBold = (str) => {
-    //replace < and > all characters between
-    return str.replace(/<(.)*?>/g, "");
-    // return str.replace(/<(strong)>/g, "").replace(/<\/(strong)>/g, "");
-  };
-
-  $: if (search == "") {
+  $: if (search_term == "") {
     filteredUsers = [];
     highlightedIndex = null;
   }
 
-  function clearInput() {
-    search = "";
-    searchInput.focus();
-  }
+  //write a function to make the matching part of str bold
+  const makeMatchBold = (str) => {
+    console.log("got", str);
+    let match = search_term.toLowerCase();
+    let matchIndex = str.toLowerCase().indexOf(match);
+    if (matchIndex == -1) {
+      return str;
+    }
+    const ret: string =
+      str.substring(0, matchIndex) +
+      "<b>" +
+      str.substring(matchIndex, matchIndex + match.length) +
+      "</b>" +
+      str.substring(matchIndex + match.length);
+    console.log("returned", ret);
+    return ret;
+  };
 
-  function setInputValue(value) {
-    search = removeBold(value);
-    filteredUsers = [];
-    // document.querySelector("#search-input").focus();
+  function clearInput() {
+    search_term = "";
+    searchInput.focus();
   }
 
   function submitValue() {
@@ -87,15 +94,13 @@
     }
   }
 
-  function filterUsers() {
-    if (search) {
-      users.forEach((user) => {
-        if (
-          user.name.toLowerCase().startsWith(search.toLowerCase()) &&
-          filteredUsers.length < 10
-        ) {
-          filteredUsers.push(user);
-        }
+  $: {
+    if (search_term) {
+      filteredUsers = users.filter((user) => {
+        return (
+          user.name.toLowerCase().substr(0, search_term.length) ==
+            search_term.toLowerCase() && !user.added
+        );
       });
     }
   }
@@ -112,7 +117,8 @@
         ? (highlightedIndex = filteredUsers.length - 1)
         : (highlightedIndex -= 1);
     } else if (e.key === "Enter") {
-      setInputValue(filteredUsers[highlightedIndex]);
+      // setInputValue(filteredUsers[highlightedIndex]);
+      add_user(filteredUsers[highlightedIndex]);
     } else {
       return;
     }
@@ -195,33 +201,31 @@
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Search users to add"
             required
-            bind:value={search}
+            bind:value={search_term}
             bind:this={searchInput}
-            on:input={filterUsers}
           />
-          <button
-            type="submit"
-            class="my-5 text-white justify-center flex items-center bg-green-700 hover:bg-green-800 w-full focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800"
-            on:click={add_group}>Add user</button
-          >
         </form>
 
         {#if filteredUsers.length > 0}
-          <ul id="autocomplete-items-list">
+          <ul id="autocomplete-items-list" class="rounded-lg bg-slate-600 mt-1">
             {#each filteredUsers as user, i}
-              <!-- check this later to show two different stlyes -->
-              <UserForSuggestion
-                title={user.name}
-                on:click={() => setInputValue(user.name)}
-              />
+              <button
+                type="button"
+                class="w-full py-4 px-4 transition-all hover:bg-slate-700 text-left rounded-lg"
+                on:click={() => {
+                  add_user(user);
+                }}
+              >
+                {@html makeMatchBold(user.name)}
+              </button>
             {/each}
           </ul>
         {/if}
 
         <button
           type="submit"
-          class="text-white justify-center flex items-center bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-          on:click={add_group}
+          class="my-5 text-white justify-center flex items-center bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          on:click={create_group}
           ><svg
             class="w-5 h-5 mr-2"
             aria-hidden="true"
@@ -239,17 +243,3 @@
     </div>
   </Drawer>
 </div>
-
-<style>
-  div.autocomplete {
-    /*the container must be positioned relative:*/
-    position: relative;
-    display: inline-block;
-    width: 300px;
-  }
-
-  input[type="submit"] {
-    background-color: DodgerBlue;
-    color: #fff;
-  }
-</style>
