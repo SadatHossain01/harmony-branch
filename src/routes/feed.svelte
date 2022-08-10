@@ -107,7 +107,7 @@
             on:click={() => {
               showGroupDropdown = !showGroupDropdown;
             }}
-            >Select group&nbsp;&nbsp;&nbsp;<FaIcon
+            >{selected_group == null ? "Select Group" : selected_group.name} &nbsp;&nbsp;&nbsp;<FaIcon
               icon="chevron-down"
             /></button
           >
@@ -124,6 +124,7 @@
                 class="w-full py-4 px-4 transition-all hover:bg-slate-700 text-left"
                 on:click={() => {
                   selected_group = group;
+                  showGroupDropdown = false;
                 }}
               >
                 {group.name}
