@@ -6,7 +6,6 @@
   setContext("index", {
     index: () => next_index++,
   });
-
   setContext("size", {
     size: () => size,
   });

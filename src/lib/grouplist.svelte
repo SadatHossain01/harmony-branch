@@ -1,6 +1,9 @@
-<script>
+<script lang="ts">
   import GroupCard from "./groupcard.svelte";
   import FaIcon from "./faIcon.svelte";
+  import { login } from "../lib/stores/login";
+  import { navigate } from "svelte-navigator";
+  import { type Group, get_groups } from "../lib/data/groups";
   //declare an array of groups with id name, intro, institution, image_link, department, group_link and batch
   //later take this from database
   let groups = [
@@ -126,6 +129,15 @@
       batch: "20",
     },
   ];
+
+  // let load_groups = (async () => {
+  //     try {
+  //       groups = await get_groups();
+  //     } catch (e) {
+  //       navigate("/login");
+  //     }
+  //   })();
+
   groups.forEach((group) => {
     group.image_link = "https://source.unsplash.com/random/" + group.id;
   });
@@ -138,13 +150,12 @@
       // console.log(search_term);
       //filter groups based on search term, considering name, intro, institution, department, batch
       showable_groups = groups.filter((group) => {
-        return (
-          group.name.toLowerCase().includes(search_term.toLowerCase()) ||
-          // group.intro.toLowerCase().includes(search_term.toLowerCase()) ||
-          group.institution.toLowerCase().includes(search_term.toLowerCase()) ||
-          group.department.toLowerCase().includes(search_term.toLowerCase()) ||
-          group.batch.toLowerCase().includes(search_term.toLowerCase())
-        );
+        return group.name.toLowerCase().includes(search_term.toLowerCase());
+        // ||
+        // group.intro.toLowerCase().includes(search_term.toLowerCase()) ||
+        // group.institution.toLowerCase().includes(search_term.toLowerCase()) ||
+        // group.department.toLowerCase().includes(search_term.toLowerCase()) ||
+        // group.batch.toLowerCase().includes(search_term.toLowerCase())
       });
     } else {
       showable_groups = groups;
@@ -161,19 +172,6 @@
       <div
         class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
       >
-        <!-- <svg
-          class="w-5 h-5 text-gray-500 dark:text-gray-400"
-          aria-hidden="true"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-          ><path
-            fill-rule="evenodd"
-            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.820 4.820a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-            clip-rule="evenodd"
-          /></svg
-        > -->
-
         <FaIcon
           icon="search"
           className="flex justify-center items-center w-5 h-5 text-gray-500 dark:text-gray-400"
