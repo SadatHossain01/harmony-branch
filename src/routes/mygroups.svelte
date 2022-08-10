@@ -19,26 +19,26 @@
   // declare an array of 20 users with id and different names
   //later bring here all the users from the database
   const users = [
-    { id: 1, name: "John Doe" },
-    { id: 2, name: "Jane Doe" },
-    { id: 3, name: "Jack Doe" },
-    { id: 4, name: "Jill Doe" },
-    { id: 5, name: "Joe Doe" },
-    { id: 6, name: "Jenny Doe" },
-    { id: 7, name: "Juan Doe" },
-    { id: 8, name: "Jenny Doe" },
-    { id: 9, name: "Juan Doe" },
-    { id: 10, name: "Jenny Doe" },
-    { id: 11, name: "Juan Doe" },
-    { id: 12, name: "Jenny Doe" },
-    { id: 13, name: "Juan Doe" },
-    { id: 14, name: "Jenny Doe" },
-    { id: 15, name: "Juan Doe" },
-    { id: 16, name: "Jenny Doe" },
-    { id: 17, name: "Juan Doe" },
-    { id: 18, name: "Jenny Doe" },
-    { id: 19, name: "Juan Doe" },
-    { id: 20, name: "Jenny Doe" },
+    { id: 1, name: "sadat999" },
+    { id: 2, name: "risenfromashes" },
+    { id: 3, name: "pumpa" },
+    { id: 4, name: "siam11651" },
+    { id: 5, name: "mahabhu" },
+    { id: 6, name: "imanik" },
+    { id: 7, name: "ishrak26" },
+    { id: 8, name: "mahirlabibdihan" },
+    { id: 9, name: "shattik420" },
+    { id: 10, name: "msh" },
+    { id: 11, name: "brainiac77" },
+    { id: 12, name: "thecodeheist" },
+    { id: 13, name: "recklessraccoon" },
+    { id: 14, name: "mijan_rmn" },
+    { id: 15, name: "nahinkhan" },
+    { id: 16, name: "nafi10" },
+    { id: 17, name: "monke" },
+    { id: 18, name: "saffatjabin" },
+    { id: 19, name: "nabid" },
+    { id: 20, name: "aniksaha" },
   ];
 
   function add_group() {
@@ -173,36 +173,6 @@
         </div>
         <div class="mb-6">
           <label
-            for="institution"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >Institution</label
-          >
-          <input
-            type="text"
-            id="institution"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Institution"
-            required
-            bind:value={institution}
-          />
-        </div>
-        <div class="mb-6">
-          <label
-            for="department"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >Department</label
-          >
-          <input
-            type="text"
-            id="department"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Department"
-            required
-            bind:value={department}
-          />
-        </div>
-        <div class="mb-6">
-          <label
             for="intro"
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
             >Intro ({maxlength - intro.length} characters remaining)</label
@@ -221,14 +191,17 @@
             type="text"
             id="search-input"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Search Users to Add"
+            placeholder="Search users to add"
             required
             bind:value={search}
             bind:this={searchInput}
             on:input={filterUsers}
           />
-
-          <input type="submit" />
+          <button
+            type="submit"
+            class="my-5 text-white justify-center flex items-center bg-green-700 hover:bg-green-800 w-full focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800"
+            on:click={add_group}>Add user</button
+          >
         </form>
 
         {#if filteredUsers.length > 0}
