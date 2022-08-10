@@ -12,7 +12,6 @@
   let filteredUsers = [];
   let searchInput;
   let search_term = "";
-  let highlightedIndex = null;
 
   // declare an array of 20 users with id and different names
   //later bring here all the users from the database
@@ -74,7 +73,6 @@
 
   $: if (search_term === "") {
     filteredUsers = [];
-    highlightedIndex = null;
   }
 
   //write a function to make the matching part of str bold
