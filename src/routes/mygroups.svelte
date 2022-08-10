@@ -15,7 +15,7 @@
 
   // declare an array of 20 users with id and different names
   //later bring here all the users from the database
-  const users = [
+  let users = [
     { id: 1, name: "sadat999", added: false },
     { id: 2, name: "risenfromashes", added: false },
     { id: 3, name: "pumpa", added: false },
@@ -38,17 +38,31 @@
     { id: 20, name: "aniksaha", added: false },
   ];
 
-  let added_users = [];
+  $: added_users = [];
 
   function add_user(user) {
-    console.log("user added", user.name);
+    if (added_users.indexOf(user) != -1) return;
     added_users.push(user);
     //set this user's added to true
     users.forEach((u) => {
-      if (u.id == user.id) {
+      if (u.id === user.id) {
         u.added = true;
       }
     });
+    added_users = added_users;
+    search_term = "";
+  }
+
+  function remove_user(user) {
+    //delete entry user from added_users
+    added_users.splice(added_users.indexOf(user), 1);
+    //set this user's added to false
+    users.forEach((u) => {
+      if (u.id === user.id) {
+        u.added = false;
+      }
+    });
+    added_users = added_users;
     search_term = "";
   }
 
@@ -57,17 +71,16 @@
     // reload the group list maybe
   }
 
-  $: if (search_term == "") {
+  $: if (search_term === "") {
     filteredUsers = [];
     highlightedIndex = null;
   }
 
   //write a function to make the matching part of str bold
   const makeMatchBold = (str) => {
-    console.log("got", str);
     let match = search_term.toLowerCase();
     let matchIndex = str.toLowerCase().indexOf(match);
-    if (matchIndex == -1) {
+    if (matchIndex === -1) {
       return str;
     }
     const ret: string =
@@ -76,7 +89,6 @@
       str.substring(matchIndex, matchIndex + match.length) +
       "</b>" +
       str.substring(matchIndex + match.length);
-    console.log("returned", ret);
     return ret;
   };
 
@@ -98,8 +110,10 @@
     if (search_term) {
       filteredUsers = users.filter((user) => {
         return (
-          user.name.toLowerCase().substr(0, search_term.length) ==
-            search_term.toLowerCase() && !user.added
+          user.name.length >= search_term.length &&
+          user.name.toLowerCase().substr(0, search_term.length) ===
+            search_term.toLowerCase() &&
+          !user.added
         );
       });
     }
@@ -143,7 +157,7 @@
   >
     <FaIcon type="regular" icon="plus" className="text-xl" />
   </button>
-  <Drawer transition_axis="-x" open={draweropen}>
+  <Drawer transition_axis="-x" bind:open={draweropen}>
     <!-- drawer component -->
     <div slot="body">
       <h5
@@ -194,6 +208,35 @@
             bind:value={intro}
           />
         </div>
+        {#each added_users as u}
+          <span
+            id="badge-dismiss-default"
+            class="inline-flex items-center py-1 px-2 mr-2 text-sm font-medium text-blue-800 bg-blue-100 rounded dark:bg-blue-200 dark:text-blue-800"
+          >
+            {u.name}
+            <button
+              type="button"
+              class="rounded-lg inline-flex items-center p-0.5 ml-2 text-sm text-blue-400 bg-transparent hover:bg-blue-200 hover:text-blue-900 dark:hover:bg-blue-300 dark:hover:text-blue-900"
+              data-dismiss-target="#badge-dismiss-default"
+              aria-label="Remove"
+              on:click={() => remove_user(u)}
+            >
+              <svg
+                aria-hidden="true"
+                class="w-3.5 h-3.5"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+                ><path
+                  fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                /></svg
+              >
+              <span class="sr-only">Remove badge</span>
+            </button>
+          </span>
+        {/each}
         <form>
           <input
             type="text"
@@ -212,7 +255,7 @@
               <button
                 type="button"
                 class="w-full py-4 px-4 transition-all hover:bg-slate-700 text-left rounded-lg"
-                on:click={() => {
+                on:click|stopPropagation={() => {
                   add_user(user);
                 }}
               >

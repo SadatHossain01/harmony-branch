@@ -142,7 +142,6 @@
     group.image_link = "https://source.unsplash.com/random/" + group.id;
   });
   let showable_groups = [];
-
   let search_term = "";
 
   $: {
