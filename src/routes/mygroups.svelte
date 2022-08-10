@@ -19,27 +19,29 @@
   // declare an array of 20 users with id and different names
   //later bring here all the users from the database
   const users = [
-    { id: 1, name: "sadat999" },
-    { id: 2, name: "risenfromashes" },
-    { id: 3, name: "pumpa" },
-    { id: 4, name: "siam11651" },
-    { id: 5, name: "mahabhu" },
-    { id: 6, name: "imanik" },
-    { id: 7, name: "ishrak26" },
-    { id: 8, name: "mahirlabibdihan" },
-    { id: 9, name: "shattik420" },
-    { id: 10, name: "msh" },
-    { id: 11, name: "brainiac77" },
-    { id: 12, name: "thecodeheist" },
-    { id: 13, name: "recklessraccoon" },
-    { id: 14, name: "mijan_rmn" },
-    { id: 15, name: "nahinkhan" },
-    { id: 16, name: "nafi10" },
-    { id: 17, name: "monke" },
-    { id: 18, name: "saffatjabin" },
-    { id: 19, name: "nabid" },
-    { id: 20, name: "aniksaha" },
+    { id: 1, name: "sadat999", added: false },
+    { id: 2, name: "risenfromashes", added: false },
+    { id: 3, name: "pumpa", added: false },
+    { id: 4, name: "siam11651", added: false },
+    { id: 5, name: "mahabhu", added: false },
+    { id: 6, name: "imanik", added: false },
+    { id: 7, name: "ishrak26", added: false },
+    { id: 8, name: "mahirlabibdihan", added: false },
+    { id: 9, name: "shattik420", added: false },
+    { id: 10, name: "msh", added: false },
+    { id: 11, name: "brainiac77", added: false },
+    { id: 12, name: "thecodeheist", added: false },
+    { id: 13, name: "recklessraccoon", added: false },
+    { id: 14, name: "mijan_rmn", added: false },
+    { id: 15, name: "nahinkhan", added: false },
+    { id: 16, name: "nafi10", added: false },
+    { id: 17, name: "monke", added: false },
+    { id: 18, name: "saffatjabin", added: false },
+    { id: 19, name: "nabid", added: false },
+    { id: 20, name: "aniksaha", added: false },
   ];
+
+  let added_users = [];
 
   function add_group() {
     //write stuffs here...
