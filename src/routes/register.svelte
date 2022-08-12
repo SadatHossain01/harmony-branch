@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   let reg = {
     user_name: "",
     password: "",
@@ -11,6 +11,8 @@
   let other_pass = "";
 
   let matched = true;
+  let usernamelabelclass = "";
+  let usernameinputclass = "";
 
   $: {
     if (reg.password === other_pass) {
@@ -20,8 +22,39 @@
     }
   }
 
+  //fetch this from database
+  let users = ["msh", "sadat999", "risenfromashes", "mahabhu", "thecodeheist"];
+
   let warning = false;
   let warning_text = "";
+
+  function isPresent(str: string) {
+    for (let i = 0; i < users.length; i++) {
+      if (users[i].toLowerCase() === str.toLowerCase()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  $: {
+    if (reg.user_name === "") {
+      usernamelabelclass =
+        "block mb-2 font-OpenSans text-sm font-medium text-gray-900 dark:text-gray-300";
+      usernameinputclass =
+        "bg-gray-50 font-OpenSans border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
+    } else if (isPresent(reg.user_name)) {
+      usernamelabelclass =
+        "block mb-2 font-OpenSans text-sm font-medium text-red-600 dark:text-red-500";
+      usernameinputclass =
+        "bg-red-50 font-OpenSans border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-red-100 dark:border-red-400 dark:focus:ring-red-500 dark:focus:border-red-500";
+    } else {
+      usernamelabelclass =
+        "block mb-2 font-OpenSans text-sm font-medium text-green-600 dark:text-green-500";
+      usernameinputclass =
+        "bg-green-50 font-OpenSans border border-green-500 text-green-900 placeholder-green-700 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-green-100 dark:border-green-400 dark:focus:ring-green-500 dark:focus:border-green-500";
+    }
+  }
 
   const submit = async () => {
     if (!matched) {
@@ -125,19 +158,30 @@
         />
       </div>
       <div>
-        <label
-          for="username"
-          class="block mb-2 font-OpenSans text-sm font-medium text-gray-900 dark:text-gray-300"
-          >Username</label
-        >
+        <label for="username" class={usernamelabelclass}>Username</label>
         <input
           type="text"
           id="username"
-          class="bg-gray-50 font-OpenSans border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          class={usernameinputclass}
           placeholder="Username"
           bind:value={reg.user_name}
           required
         />
+        {#if reg.user_name}
+          {#if isPresent(reg.user_name)}
+            <p
+              class="mt-2 text-sm text-red-600 dark:text-red-500 font-OpenSans"
+            >
+              <span class="font-medium" /> Sorry, username already taken!
+            </p>
+          {:else}
+            <p
+              class="mt-2 text-sm text-green-600 dark:text-green-500 font-OpenSans"
+            >
+              <span class="font-medium" /> Username available!
+            </p>
+          {/if}
+        {/if}
       </div>
     </div>
     <div class="mb-6">

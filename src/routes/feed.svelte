@@ -195,18 +195,6 @@
         ? newPostContent.text.trim()
         : "What's in you mind?"}
     </button>
-    <!-- <button
-      type="button"
-      class={"w-10/12 h-14 border border-slate-700 rounded-full text-left px-8 cursor-text overflow-hidden flex-shrink-0 whitespace-nowrap" +
-        (newPostQlContent.text.trim() ? "  text-white" : " text-gray-400")}
-      on:click={() => {
-        showEditor = true;
-      }}
-    >
-      {newPostQlContent.text.trim()
-        ? newPostQlContent.text.trim()
-        : "What's in you mind, Ashraf?"}</button
-    > -->
   </div>
 
   <PostItem poster={"Siam"} post={"what the hell this is?"} />
