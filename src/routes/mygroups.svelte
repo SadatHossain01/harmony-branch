@@ -14,7 +14,7 @@
   let search_term = "";
 
   // declare an array of 20 users with id and different names
-  //later bring here all the users from the database
+  //later bring here all the matching users from the database
   let users = [
     { id: 1, name: "sadat999", added: false },
     { id: 2, name: "risenfromashes", added: false },

@@ -122,7 +122,9 @@
       data-drawer-target="drawer-contact"
       data-drawer-show="drawer-contact"
       aria-controls="drawer-contact"
-      on:click|stopPropagation={() => (draweropen = !draweropen)}
+      on:click|stopPropagation={() => {
+        draweropen = !draweropen;
+      }}
     >
       Have More Questions?
     </button>

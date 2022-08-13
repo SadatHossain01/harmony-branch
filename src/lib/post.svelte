@@ -1,9 +1,8 @@
 <script>
   import { scale } from "svelte/transition";
-  export let poster = "Sadat";
-  export let time = "30-07-2022 10:51PM"; //when it was posted
-  export let post =
-    "Hello world, how are you? My name is Sadat and I want to introduce myself.";
+  export let poster = "";
+  export let time = ""; //when it was posted
+  export let post = "";
   let showComments = false;
 
   $: showCommentStatement = showComments ? "Hide Comments" : "Show Comments";
