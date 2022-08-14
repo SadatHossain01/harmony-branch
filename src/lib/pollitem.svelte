@@ -1,8 +1,65 @@
 <script lang="ts">
   import type { Poll } from "./data/polls";
   import FaIcon from "../lib/faIcon.svelte";
-  import { slide } from "svelte/transition";
   import { flip } from "svelte/animate";
+  import { cubicOut } from "svelte/easing";
+  export let transition_axis = "y";
+
+  function slide(
+    node,
+    { delay = 0, duration = 500, easing = cubicOut, axis = transition_axis }
+  ) {
+    console.log("hey transition");
+    const style = getComputedStyle(node);
+    const opacity = +style.opacity;
+    const primary_dimension = axis === "y" ? "height" : "width";
+    const primary_dimension_value = parseFloat(style[primary_dimension]);
+    const secondary_dimensions =
+      axis === "y" ? ["Top", "Bottom"] : ["Left", "Right"];
+    const padding_start_value = parseFloat(
+      style.padding + secondary_dimensions[0]
+    );
+    const padding_end_value = parseFloat(
+      style.padding + secondary_dimensions[1]
+    );
+    const margin_start_value = parseFloat(
+      style.margin + secondary_dimensions[0]
+    );
+    const margin_end_value = parseFloat(style.margin + secondary_dimensions[1]);
+    const border_width_start_value = parseFloat(
+      style[`border${secondary_dimensions[0]}Width`]
+    );
+    const border_width_end_value = parseFloat(
+      style[`border${secondary_dimensions[1]}Width`]
+    );
+    return {
+      delay,
+      duration,
+      easing,
+      css: (t) =>
+        "overflow: hidden;" +
+        `opacity: ${Math.min(t * 20, 1) * opacity};` +
+        `${primary_dimension}: ${t * primary_dimension_value}px;` +
+        `padding-${secondary_dimensions[0].toLowerCase()}: ${
+          t * padding_start_value
+        }px;` +
+        `padding-${secondary_dimensions[1].toLowerCase()}: ${
+          t * padding_end_value
+        }px;` +
+        `margin-${secondary_dimensions[0].toLowerCase()}: ${
+          t * margin_start_value
+        }px;` +
+        `margin-${secondary_dimensions[1].toLowerCase()}: ${
+          t * margin_end_value
+        }px;` +
+        `border-${secondary_dimensions[0].toLowerCase()}-width: ${
+          t * border_width_start_value
+        }px;` +
+        `border-${secondary_dimensions[1].toLowerCase()}-width: ${
+          t * border_width_end_value
+        }px;`,
+    };
+  }
 
   export let poll: Poll;
   //sort the poll options by vote count
@@ -11,6 +68,8 @@
       return b.vote_count - a.vote_count;
     });
   };
+
+  let ref;
 
   $: {
     if (poll.totalvote > 0) {
@@ -50,14 +109,14 @@
 
 <div class="p-5" in:slide>
   <p
-    class="text-2xl text-gray-500 dark:text-gray-400 font-Oxygen my-3 font-extrabold"
+    class="text-4xl text-gray-500 dark:text-gray-400 font-Oxygen my-3 font-extrabold"
   >
     {poll.title}
   </p>
   <p class="text-lg font-medium text-gray-500 dark:text-gray-400">
     {poll.totalvote} total votes
   </p>
-  <div class="grid auto-rows-fr">
+  <div class="grid auto-rows-fr" bind:this={ref}>
     {#each poll.options as option (Number(option.optionid))}
       <div
         animate:flip={{
@@ -73,6 +132,7 @@
               <div
                 class="h-6 bg-yellow-400 rounded"
                 style="width: {option.width}%"
+                transition:slide={{ axis: "x" }}
               />
             {/if}
           </div>
