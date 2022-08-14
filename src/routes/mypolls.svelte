@@ -1,0 +1,203 @@
+<script lang="ts">
+  import Pollitem from "../lib/pollitem.svelte";
+  import type { Poll } from "../lib/data/polls";
+
+  //declare an array of 5 Poll Objects
+  const polls: Poll[] = [
+    {
+      id: "1",
+      title: "Poll 1",
+      options: [
+        {
+          pollid: "1",
+          optionid: "1",
+          option_title: "Option 1",
+          vote_count: 5,
+          width: 0,
+        },
+        {
+          pollid: "1",
+          optionid: "2",
+          option_title: "Option 2",
+          vote_count: 5,
+          width: 0,
+        },
+        {
+          pollid: "1",
+          optionid: "3",
+          option_title: "Option 3",
+          vote_count: 10,
+          width: 0,
+        },
+      ],
+      totalvote: 0,
+      votedOption: "-1",
+    },
+    {
+      id: "2",
+      title: "Poll 2",
+      options: [
+        {
+          pollid: "2",
+          optionid: "1",
+          option_title: "Option 1",
+          vote_count: 4,
+          width: 0,
+        },
+        {
+          pollid: "2",
+          optionid: "2",
+          option_title: "Option 2",
+          vote_count: 0,
+          width: 0,
+        },
+        {
+          pollid: "2",
+          optionid: "3",
+          option_title: "Option 3",
+          vote_count: 1,
+          width: 0,
+        },
+      ],
+      totalvote: 0,
+      votedOption: "-1",
+    },
+    {
+      id: "3",
+      title: "Poll 3",
+      options: [
+        {
+          pollid: "3",
+          optionid: "1",
+          option_title: "Option 1",
+          vote_count: 8,
+          width: 0,
+        },
+        {
+          pollid: "3",
+          optionid: "2",
+          option_title: "Option 2",
+          vote_count: 9,
+          width: 0,
+        },
+        {
+          pollid: "3",
+          optionid: "3",
+          option_title: "Option 3",
+          vote_count: 1,
+          width: 0,
+        },
+      ],
+      totalvote: 0,
+      votedOption: "-1",
+    },
+    {
+      id: "4",
+      title: "Poll 4",
+      options: [
+        {
+          pollid: "4",
+          optionid: "1",
+          option_title: "Option 1",
+          vote_count: 1,
+          width: 0,
+        },
+        {
+          pollid: "4",
+          optionid: "2",
+          option_title: "Option 2",
+          vote_count: 11,
+          width: 0,
+        },
+        {
+          pollid: "4",
+          optionid: "3",
+          option_title: "Option 3",
+          vote_count: 5,
+          width: 0,
+        },
+      ],
+      totalvote: 0,
+      votedOption: "-1",
+    },
+    {
+      id: "5",
+      title: "Poll 5",
+      options: [
+        {
+          pollid: "5",
+          optionid: "1",
+          option_title: "Option 1",
+          vote_count: 1,
+          width: 0,
+        },
+        {
+          pollid: "5",
+          optionid: "2",
+          option_title: "Option 2",
+          vote_count: 0,
+          width: 0,
+        },
+        {
+          pollid: "5",
+          optionid: "3",
+          option_title: "Option 3",
+          vote_count: 0,
+          width: 0,
+        },
+        {
+          pollid: "5",
+          optionid: "4",
+          option_title: "Option 3",
+          vote_count: 0,
+          width: 0,
+        },
+        {
+          pollid: "5",
+          optionid: "5",
+          option_title: "Option 3",
+          vote_count: 0,
+          width: 0,
+        },
+        {
+          pollid: "5",
+          optionid: "6",
+          option_title: "Option 3",
+          vote_count: 0,
+          width: 0,
+        },
+        {
+          pollid: "5",
+          optionid: "7",
+          option_title: "Option 3",
+          vote_count: 0,
+          width: 0,
+        },
+        {
+          pollid: "5",
+          optionid: "8",
+          option_title: "Option 3",
+          vote_count: 0,
+          width: 0,
+        },
+      ],
+      totalvote: 0,
+      votedOption: "-1",
+    },
+  ];
+
+  polls.forEach((p) => {
+    p.totalvote = 0;
+    for (let i = 0; i < p.options.length; i++) {
+      p.totalvote += p.options[i].vote_count;
+    }
+  });
+</script>
+
+<div class="bg-slate-900">
+  <div class="w-3/4 p-10 my-10 flex-1">
+    {#each polls as poll (Number(poll.id))}
+      <Pollitem {poll} />
+    {/each}
+  </div>
+</div>
