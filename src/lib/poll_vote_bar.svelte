@@ -14,6 +14,6 @@
   $: progress.set(percent);
 </script>
 
-<div class="mx-4 w-2/4 h-6 bg-gray-200 rounded dark:bg-gray-700">
-  <div class="h-6 bg-yellow-400 rounded" style="width: {$progress}%" />
+<div class=" w-full h-6 bg-gray-200 rounded dark:bg-gray-700">
+  <div class=" h-6 bg-yellow-400 rounded" style="width: {$progress}%" />
 </div>
