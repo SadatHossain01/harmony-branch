@@ -215,7 +215,7 @@
 </script>
 
 <div class="bg-slate-900">
-  <div class="w-3/4 p-10 my-10 flex-1">
+  <div class="w-3/4 p-10 my-10 flex-1 mx-auto">
     {#each polls as poll (Number(poll.id))}
       <Pollitem {poll} />
     {/each}

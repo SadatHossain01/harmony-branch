@@ -49,7 +49,7 @@
   }
 </script>
 
-<div class="p-5" in:slide>
+<div class="my-5 p-5 bg-slate-800 rounded-lg" in:slide>
   <p
     class="text-4xl text-gray-500 dark:text-gray-400 font-Oxygen my-3 font-extrabold"
   >
@@ -61,13 +61,13 @@
   <div class="grid auto-rows-fr">
     {#each poll.options as option (Number(option.optionid))}
       <div
-        class="grid grid-cols-11 my-2 h-full w-full"
+        class="grid grid-cols-10 my-2 h-full w-full"
         animate:flip={{
           duration: () => 750 * Math.sqrt(Number(option.optionid)),
         }}
       >
         <span
-          class="text-lg font-medium text-blue-600 dark:text-blue-500 col-span-2 truncate"
+          class="text-xl font-medium text-blue-600 dark:text-blue-500 col-span-2 truncate"
           >{option.option_title}</span
         >
         <div class="col-span-6 px-1">
@@ -75,7 +75,7 @@
         </div>
 
         <span
-          class="text-lg font-medium text-blue-600 dark:text-blue-500 mx-auto col-span-1"
+          class="text-xl font-medium text-blue-600 dark:text-blue-500 mx-auto col-span-1"
           >{option.width}%</span
         >
         {#if poll.votedOption == "-1"}
