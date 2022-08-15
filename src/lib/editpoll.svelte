@@ -3,9 +3,9 @@
   import { fade } from "svelte/transition";
   import FaIcon from "../lib/faIcon.svelte";
   import { flip } from "svelte/animate";
-
   export let poll: Poll;
   export let show: boolean = false;
+
   //create a copy of poll in temp
   let temp: Poll = {
     id: poll.id,
@@ -30,6 +30,25 @@
     if (temp.votedOption === id) {
       temp.votedOption = "-1";
     }
+  }
+
+  function addNewOption() {
+    //add an empty option to the poll
+    //take the maximum of all existing and add 1 to that
+    let max = 0;
+    temp.options.forEach((option) => {
+      if (Number(option.optionid) > max) max = Number(option.optionid);
+    }),
+      max++;
+    temp.options.push({
+      pollid: poll.id,
+      optionid: max.toString(),
+      option_title: "New Option",
+      description: "",
+      vote_count: 0,
+      width: 0,
+    });
+    temp.options = temp.options;
   }
 
   function confirmupdate() {
@@ -98,9 +117,12 @@
                 required
               />
             </div>
-
             {#each temp.options as option (Number(option.optionid))}
-              <div animate:flip class="bg-stone-600 rounded-lg p-2">
+              <div
+                animate:flip
+                class="bg-gray-600 rounded-lg p-2"
+                transition:fade
+              >
                 <div class="flex justify-end">
                   <label
                     for="title"
@@ -144,11 +166,18 @@
                 </div>
               </div>
             {/each}
-            <button
-              type="submit"
-              class="w-1/3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              on:click={confirmupdate}>Confirm</button
-            >
+            <div class="flex justify-between mx-3">
+              <button
+                type="submit"
+                class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                on:click={addNewOption}>Add Option</button
+              >
+              <button
+                type="submit"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                on:click={confirmupdate}>Confirm</button
+              >
+            </div>
           </form>
         </div>
       </div>

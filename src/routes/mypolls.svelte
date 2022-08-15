@@ -1,6 +1,20 @@
 <script lang="ts">
   import Pollitem from "../lib/pollitem.svelte";
   import type { Poll } from "../lib/data/polls";
+  import { beforeUpdate, afterUpdate } from "svelte";
+
+  let div;
+  let autoscroll;
+
+  beforeUpdate(() => {
+    autoscroll =
+      div && div.offsetHeight + div.scrollTop > div.scrollHeight - 20;
+  });
+
+  afterUpdate(() => {
+    console.log(div.scrollHeight);
+    if (autoscroll) div.scrollTo(0, div.scrollHeight);
+  });
 
   //declare an array of 5 Poll Objects
   let polls: Poll[] = [
@@ -224,7 +238,7 @@
 </script>
 
 <div class="bg-slate-900">
-  <div class="w-3/4 p-10 my-10 flex-1 mx-auto">
+  <div class="w-3/4 p-10 my-10 flex-1 mx-auto" bind:this={div}>
     {#each polls as poll}
       <Pollitem {poll} {deletePoll} />
     {/each}
