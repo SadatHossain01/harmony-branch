@@ -10,23 +10,31 @@
     map[Number(option.optionid)] = true;
   });
 
-  function updateArrayAfterRemoving() {
-    console.log(map);
+  function updatePollAfterRemoving() {
     poll.options.forEach((option) => {
       if (map[Number(option.optionid)] != true) {
         poll.options.splice(poll.options.indexOf(option), 1);
+        poll.totalvote -= option.vote_count;
+        if (poll.votedOption == option.optionid) {
+          poll.votedOption = "-1";
+        }
       }
     });
     poll.options = poll.options;
+    //update database
   }
-  {
-    console.log(map);
+
+  function confirmupdate() {
+    show = false;
+    updatePollAfterRemoving();
+    //decrement the count of votes of the options which have been removed
   }
 </script>
 
 {#if show}
   <div
     id="authentication-modal"
+    data-modal-placement="center"
     tabindex="-1"
     aria-hidden="true"
     class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full"
@@ -105,10 +113,7 @@
             <button
               type="submit"
               class="w-1/3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              on:click={() => {
-                show = false;
-                updateArrayAfterRemoving();
-              }}>Confirm</button
+              on:click={confirmupdate}>Confirm</button
             >
           </form>
         </div>

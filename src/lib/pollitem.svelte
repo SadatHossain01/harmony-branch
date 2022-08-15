@@ -16,12 +16,12 @@
   };
 
   $: {
-    if (poll.totalvote > 0) {
-      poll.options = sortOptions(poll.options);
-      poll.options.forEach((option) => {
+    poll.options = sortOptions(poll.options);
+    poll.options.forEach((option) => {
+      if (poll.totalvote > 0)
         option.width = Math.round((option.vote_count / poll.totalvote) * 100);
-      });
-    }
+      else option.width = 0;
+    });
   }
 
   function castVote(optionid: string) {
