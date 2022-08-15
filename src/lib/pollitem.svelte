@@ -4,8 +4,10 @@
   import PollVoteBar from "./poll_vote_bar.svelte";
   import { flip } from "svelte/animate";
   import { slide } from "svelte/transition";
+  import Editpoll from "./editpoll.svelte";
 
   export let poll: Poll;
+  let showedit: boolean = false;
   //sort the poll options by vote count
   const sortOptions = (options: any[]) => {
     return options.sort((a, b) => {
@@ -49,6 +51,10 @@
   }
 </script>
 
+{#if showedit}
+  <Editpoll {poll} bind:show={showedit} />
+{/if}
+
 <div class="my-5 p-5 bg-slate-800 rounded-lg" in:slide>
   <div class="flex justify-between">
     <div>
@@ -65,7 +71,9 @@
       <button
         type="button"
         class="text-white bg-blue-700 dark:bg-blue-600 hover:bg-blue-800 dark:hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center w-1/10 mx-2"
-        >Edit Poll</button
+        on:click={() => {
+          showedit = true;
+        }}>Edit Poll</button
       >
       <button
         type="button"

@@ -3,8 +3,8 @@
   import PostItem from "../lib/post.svelte";
   import FaIcon from "../lib/faIcon.svelte";
   import Quill from "../lib/quill.svelte";
-  import { type Group, get_groups } from "../lib/data/groups";
-  import { type Post, get_posts } from "../lib/data/posts";
+  import type { Group, get_groups } from "../lib/data/groups";
+  import type { Post, get_posts } from "../lib/data/posts";
   import { navigate } from "svelte-navigator";
   import { login } from "../lib/stores/login";
 
@@ -83,7 +83,7 @@
 </script>
 
 <svelte:head>
-  <title>Showing Posts</title>
+  <title>Feed</title>
 </svelte:head>
 
 {#if showEditor}
