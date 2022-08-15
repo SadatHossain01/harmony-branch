@@ -72,10 +72,10 @@
     data-modal-placement="center"
     tabindex="-1"
     aria-hidden="true"
-    class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full"
+    class="overflow-y-scroll overflow-x-hidden fixed z-50 w-full md:inset-0 h-modal md:h-full flex justify-center items-center"
     transition:fade
   >
-    <div class="relative p-4 w-full max-w-md h-full md:h-auto">
+    <div class="relative p-4 w-full max-w-md max-h-screen h-full md:h-auto">
       <!-- Modal content -->
       <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
         <button
