@@ -69,12 +69,10 @@
           <span class="text-lg font-medium text-blue-600 dark:text-blue-500"
             >{option.option_title}</span
           >
-          <PollVoteBar
-            bind:percent={option.width}
-            delTime={Number(option.optionid) * 1000}
-          />
+          <PollVoteBar bind:percent={option.width} />
 
-          <span class="text-lg font-medium text-blue-600 dark:text-blue-500"
+          <span
+            class="text-lg font-medium text-blue-600 dark:text-blue-500 shrink-0 w-10"
             >{option.width}%</span
           >
           {#if poll.votedOption == "-1"}
