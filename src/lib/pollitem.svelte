@@ -1,15 +1,9 @@
 <script lang="ts">
   import type { Poll } from "./data/polls";
   import FaIcon from "../lib/faIcon.svelte";
+  import PollVoteBar from "./poll_vote_bar.svelte";
   import { flip } from "svelte/animate";
   import { slide } from "svelte/transition";
-  import { tweened } from "svelte/motion";
-  import { cubicOut } from "svelte/easing";
-
-  const progress = tweened(0, {
-    duration: 400,
-    easing: cubicOut,
-  });
 
   export let poll: Poll;
   //sort the poll options by vote count
@@ -18,8 +12,6 @@
       return b.vote_count - a.vote_count;
     });
   };
-
-  let ref;
 
   $: {
     if (poll.totalvote > 0) {
@@ -66,7 +58,7 @@
   <p class="text-lg font-medium text-gray-500 dark:text-gray-400">
     {poll.totalvote} total votes
   </p>
-  <div class="grid auto-rows-fr" bind:this={ref}>
+  <div class="grid auto-rows-fr">
     {#each poll.options as option (Number(option.optionid))}
       <div
         animate:flip={{
@@ -77,14 +69,11 @@
           <span class="text-lg font-medium text-blue-600 dark:text-blue-500"
             >{option.option_title}</span
           >
-          <div class="mx-4 w-2/4 h-6 bg-gray-200 rounded dark:bg-gray-700">
-            {#if option.width > 0}
-              <div
-                class="h-6 bg-yellow-400 rounded"
-                style="width: {option.width}%"
-              />
-            {/if}
-          </div>
+          <PollVoteBar
+            bind:percent={option.width}
+            delTime={Number(option.optionid) * 1000}
+          />
+
           <span class="text-lg font-medium text-blue-600 dark:text-blue-500"
             >{option.width}%</span
           >
