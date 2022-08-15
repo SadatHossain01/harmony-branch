@@ -67,7 +67,7 @@
         }}
       >
         <span
-          class="text-lg font-medium text-blue-600 dark:text-blue-500 col-span-1 truncate"
+          class="text-lg font-medium text-blue-600 dark:text-blue-500 col-span-2 truncate"
           >{option.option_title}</span
         >
         <div class="col-span-6 px-1">
@@ -80,7 +80,7 @@
         >
         {#if poll.votedOption == "-1"}
           <button
-            class="h-10 w-10 shadow-xl text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-full lg:ml-5 text-sm mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800 disabled:cursor-not-allowed disabled:bg-green-700 col-span-2"
+            class="h-10 w-10 shadow-xl text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-full lg:ml-5 text-sm mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800 disabled:cursor-not-allowed disabled:bg-green-700 col-span-1"
             type="button"
             on:click={() => castVote(option.optionid)}
           >
@@ -88,7 +88,7 @@
           </button>
         {:else if poll.votedOption == option.optionid}
           <button
-            class="h-10 w-10 shadow-xl text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-full lg:ml-5 text-sm mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800 disabled:cursor-not-allowed disabled:bg-red-700"
+            class="h-10 w-10 shadow-xl text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-full lg:ml-5 text-sm mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800 disabled:cursor-not-allowed disabled:bg-red-700 col-span-1"
             type="button"
             disabled={poll.votedOption != option.optionid}
             on:click={() => removeVote(option.optionid)}

@@ -2,6 +2,7 @@ export interface Option {
     pollid: string;
     optionid: string;
     option_title: string;
+    description: string;
     vote_count: number;
     width: number;
 }
