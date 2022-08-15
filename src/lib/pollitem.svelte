@@ -52,7 +52,7 @@
 </script>
 
 {#if showedit}
-  <Editpoll {poll} bind:show={showedit} />
+  <Editpoll bind:poll bind:show={showedit} />
 {/if}
 
 <div class="my-5 p-5 bg-slate-800 rounded-lg" in:slide>
