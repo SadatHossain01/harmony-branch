@@ -15,6 +15,8 @@
     });
   };
 
+  export let deletePoll;
+
   $: {
     poll.options = sortOptions(poll.options);
     poll.options.forEach((option) => {
@@ -55,7 +57,7 @@
   <Editpoll bind:poll bind:show={showedit} />
 {/if}
 
-<div class="my-5 p-5 bg-slate-800 rounded-lg" in:slide>
+<div class="my-5 p-5 bg-slate-800 rounded-lg" transition:slide>
   <div class="flex justify-between">
     <div>
       <p
@@ -78,7 +80,7 @@
       <button
         type="button"
         class="text-white bg-red-700 dark:bg-red-600 hover:bg-red-800 dark:hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2 text-center w-1/10 mx-2"
-        >Delete Poll</button
+        on:click={() => deletePoll(poll.id)}>Delete Poll</button
       >
     </div>
   </div>

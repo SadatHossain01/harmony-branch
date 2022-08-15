@@ -3,7 +3,7 @@
   import type { Poll } from "../lib/data/polls";
 
   //declare an array of 5 Poll Objects
-  const polls: Poll[] = [
+  let polls: Poll[] = [
     {
       id: "1",
       title: "Poll 1",
@@ -212,12 +212,21 @@
       p.totalvote += p.options[i].vote_count;
     }
   });
+
+  function deletePoll(id: string) {
+    console.log("got delete request for poll with id: " + id);
+    const index = polls.findIndex((p) => p.id === id);
+    console.log(index);
+    if (index === -1) return;
+    polls.splice(index, 1);
+    polls = polls;
+  }
 </script>
 
 <div class="bg-slate-900">
   <div class="w-3/4 p-10 my-10 flex-1 mx-auto">
-    {#each polls as poll (Number(poll.id))}
-      <Pollitem {poll} />
+    {#each polls as poll}
+      <Pollitem {poll} {deletePoll} />
     {/each}
   </div>
 </div>

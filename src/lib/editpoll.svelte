@@ -1,33 +1,49 @@
 <script lang="ts">
   import type { Poll } from "./data/polls";
   import { fade } from "svelte/transition";
+  import FaIcon from "../lib/faIcon.svelte";
+  import { flip } from "svelte/animate";
 
   export let poll: Poll;
   export let show: boolean = false;
+  //create a copy of poll in temp
+  let temp: Poll = {
+    id: poll.id,
+    title: poll.title,
+    // description: poll.description,
+    options: [...poll.options],
+    totalvote: poll.totalvote,
+    votedOption: poll.votedOption,
+  };
 
-  let map = new Map();
-  poll.options.forEach((option) => {
-    map[Number(option.optionid)] = true;
-  });
-
-  function updatePollAfterRemoving() {
-    poll.options.forEach((option) => {
-      if (map[Number(option.optionid)] != true) {
-        poll.options.splice(poll.options.indexOf(option), 1);
-        poll.totalvote -= option.vote_count;
-        if (poll.votedOption == option.optionid) {
-          poll.votedOption = "-1";
-        }
+  function removeOption(id: string) {
+    //decrement the count of votes of the options which have been removed
+    temp.options.forEach((option) => {
+      if (option.optionid === id) {
+        temp.totalvote -= option.vote_count;
       }
     });
-    poll.options = poll.options;
-    //update database
+    //remove the option from the poll
+    temp.options = temp.options.filter((option) => {
+      return option.optionid !== id;
+    });
+    if (temp.votedOption === id) {
+      temp.votedOption = "-1";
+    }
   }
 
   function confirmupdate() {
     show = false;
-    updatePollAfterRemoving();
-    //decrement the count of votes of the options which have been removed
+    //copy temp into poll
+    poll = {
+      id: temp.id,
+      title: temp.title,
+      // description: temp.description,
+      options: [...temp.options],
+      totalvote: temp.totalvote,
+      votedOption: temp.votedOption,
+    };
+    //update in database as well
   }
 </script>
 
@@ -83,33 +99,51 @@
               />
             </div>
 
-            {#each poll.options as option}
-              <div class="flex">
-                <div class="flex items-center h-5">
+            {#each temp.options as option (Number(option.optionid))}
+              <div animate:flip>
+                <div class="flex justify-end">
+                  <label
+                    for="title"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 align-middle"
+                    >Option Title</label
+                  >
+                  <button
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg align-middle text-sm ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                    type="button"
+                    on:click={() => removeOption(option.optionid)}
+                  >
+                    <FaIcon
+                      type="regular"
+                      icon="minus"
+                      className="text-sm px-2 py-1"
+                    />
+                  </button>
+                </div>
+                <div class="mb-2">
                   <input
-                    id="helper-checkbox"
-                    aria-describedby="helper-checkbox-text"
-                    type="checkbox"
-                    bind:checked={map[Number(option.optionid)]}
-                    class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    type="text"
+                    id="title"
+                    class="bg-gray-50 my-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    bind:value={option.option_title}
+                    required
                   />
                 </div>
-                <div class="ml-2 text-sm">
+                <div>
                   <label
-                    for="helper-checkbox"
-                    class="font-medium text-gray-900 dark:text-gray-300 font-OpenSans"
-                    >{option.option_title}</label
+                    for="description"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+                    >Option Description (50 characters max)</label
                   >
-                  <p
-                    id="helper-checkbox-text"
-                    class="text-xs font-normal text-gray-500 dark:text-gray-300 font-OpenSans"
-                  >
-                    {option.description}
-                  </p>
+                  <textarea
+                    id="description"
+                    rows="2"
+                    maxlength="50"
+                    class="block p-2.5 my-1 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    bind:value={option.description}
+                  />
                 </div>
               </div>
             {/each}
-
             <button
               type="submit"
               class="w-1/3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
