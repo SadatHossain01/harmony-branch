@@ -85,7 +85,7 @@
           <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">
             Edit Poll
           </h3>
-          <form class="space-y-6" action="#">
+          <form class="space-y-6">
             <div>
               <label
                 for="title"
@@ -93,14 +93,14 @@
                 >Poll Title</label
               >
               <input
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 value={poll.title}
                 required
               />
             </div>
 
             {#each temp.options as option (Number(option.optionid))}
-              <div animate:flip>
+              <div animate:flip class="bg-stone-600 rounded-lg p-2">
                 <div class="flex justify-end">
                   <label
                     for="title"
@@ -132,7 +132,7 @@
                   <label
                     for="description"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
-                    >Option Description (50 characters max)</label
+                    >Option Description (maximum 50 characters)</label
                   >
                   <textarea
                     id="description"
