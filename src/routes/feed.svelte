@@ -3,10 +3,16 @@
   import PostItem from "../lib/post.svelte";
   import FaIcon from "../lib/faIcon.svelte";
   import Quill from "../lib/quill.svelte";
-  import type { Group, get_groups } from "../lib/data/groups";
-  import type { Post, get_posts } from "../lib/data/posts";
+  import {
+    type Group,
+    getGroups,
+    loadGroups,
+    loadGroupsDev,
+  } from "../lib/data/groups";
+  import { type Post, getPosts, getPostsDev } from "../lib/data/posts";
   import { navigate } from "svelte-navigator";
   import { login } from "../lib/stores/login";
+  import { formatRelative } from "date-fns";
 
   let showEditor = false;
   let showGroupDropdown = false;
@@ -159,6 +165,7 @@
         <button
           type="button"
           class="resize-none rounded-lg font-semibold text-xl transition-all outline-none hover:text-emerald-400"
+       
           ><FaIcon icon="paper-plane" />&nbsp;&nbsp;Send</button
         >
       </div>
@@ -170,7 +177,7 @@
   class="w-full bg-slate-900 flex flex-col justify-start items-center pt-20 pb-10"
 >
   <div
-    class="w-11/12 min-h-[5rem] flex justify-center mt-10 mb-5 py-4 px-6 rounded-xl bg-slate-800 shadow-xl flex-shrink-0"
+    class="w-8/12 min-h-[5rem] flex justify-center mt-10 mb-5 py-4 px-6 rounded-xl bg-slate-800 shadow-xl flex-shrink-0"
     in:scale={{ duration: 300 }}
   >
     <div
@@ -185,7 +192,7 @@
 
     <button
       type="button"
-      class={"w-10/12 h-14 border border-slate-700 rounded-full text-left px-8 cursor-text overflow-hidden flex-shrink-0 whitespace-nowrap" +
+      class={"bg-slate-900 flex flex-1 items-center border border-slate-700 rounded-lg text-left px-4 cursor-text overflow-hidden flex-shrink-0 whitespace-nowrap" +
         (newPostContent.text.trim() ? "  text-white" : " text-gray-400")}
       on:click={() => {
         showEditor = true;
