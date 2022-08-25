@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { Poll } from "./data/polls";
   import FaIcon from "../lib/faIcon.svelte";
-  import PollVoteBar from "./poll_vote_bar.svelte";
   import { flip } from "svelte/animate";
   import { slide } from "svelte/transition";
   import Editpoll from "./editpoll.svelte";
@@ -25,32 +24,6 @@
         option.width = Math.round((option.vote_count / poll.totalvote) * 100);
       else option.width = 0;
     });
-  }
-
-  function castVote(optionid: string) {
-    //update the vote count for the option
-    poll.options.forEach((option) => {
-      if (option.optionid === optionid) {
-        option.vote_count++;
-      }
-    });
-    //update the total vote count
-    poll.totalvote++;
-    //update the hasVoted flag
-    poll.votedOption = optionid;
-  }
-
-  function removeVote(optionid: string) {
-    //update the vote count for the option
-    poll.options.forEach((option) => {
-      if (option.optionid === optionid) {
-        option.vote_count--;
-      }
-    });
-    //update the total vote count
-    poll.totalvote--;
-    //update the hasVoted flag
-    poll.votedOption = "-1";
   }
 </script>
 
@@ -89,10 +62,11 @@
       </button>
     </div>
   </div>
-  <div class="grid auto-rows-fr">
+  <!-- if you use auto-rows-fr, then opening one option will cause all others to expand (but not showing option), because all rows have to be of same width -->
+  <!-- but then again, if you do not use it, then voted or unvoted options will be of different widths, leading to mismatched version -->
+  <div class="grid">
     {#each poll.options as option (Number(option.optionid))}
       <div
-        class="grid grid-cols-10 my-2 h-full w-full"
         animate:flip={{
           duration: () => 750 * Math.sqrt(Number(option.optionid)),
         }}
