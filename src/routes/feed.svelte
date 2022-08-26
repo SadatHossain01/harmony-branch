@@ -11,8 +11,11 @@
   } from "../lib/data/groups";
   import { type Post, getPosts, getPostsDev } from "../lib/data/posts";
   import { navigate } from "svelte-navigator";
+
+  // import { type QlDelta } from "../lib/utilities/qlDeltaProcessing";
   import { login } from "../lib/stores/login";
   import { formatRelative } from "date-fns";
+  import Loader from "../lib/loader.svelte";
 
   let showEditor = false;
   let showGroupDropdown = false;
@@ -26,60 +29,54 @@
   let posts: Array<Post> = [];
   let selected_group: Group = null;
 
-  // let load_groups = (async () => {
-  //   try {
-  //     groups = await get_groups();
-  //     selected_group = groups[0];
-  //   } catch (e) {
-  //     navigate("/login");
-  //   }
-  // })();
+  let load_groups = loadGroupsDev();
 
-  // let load_posts = (async () => {
-  //   try {
-  //     posts = await get_posts();
-  //   } catch (e) {
-  //     navigate("/login");
-  //     console.log(e);
-  //   }
-  // })();
+  let load_posts = (async () => {
+    try {
+      posts = await getPostsDev();
+    } catch (e) {
+      navigate("/login");
+      console.log(e);
+    }
+  })();
 
-  // const submit_post = async () => {
-  //   // TODO: show error alerts
-  //   try {
-  //     if (selected_group == null) {
-  //       return;
-  //     }
-  //     if (login.user_id === "-1") {
-  //       navigate("/");
-  //     }
+  const submit_post = async () => {
+    // TODO: show error alerts
+    try {
+      if (selected_group == null) {
+        return;
+      }
+      if (login.user_id === "-1") {
+        navigate("/");
+      }
 
-  //     let post = {
-  //       user_id: login.user_id,
-  //       group_id: selected_group.id.toString(),
-  //       text: newPostContent.text.toString(),
-  //     };
+      let post = {
+        user_id: login.user_id,
+        group_id: selected_group.id.toString(),
+        text: newPostContent.text.toString(),
+      };
 
-  //     console.log({ post });
+      console.log({ post });
 
-  //     let res = await fetch("/post", {
-  //       method: "POST",
-  //       body: JSON.stringify(post),
-  //     });
+      let res = await fetch("/post", {
+        method: "POST",
+        body: JSON.stringify(post),
+      });
 
-  //     if (res.ok) {
-  //       showEditor = false;
-  //       navigate("/");
-  //     } else {
-  //       console.log(res);
-  //     }
-  //   } catch (e) {}
-  // };
+      if (res.ok) {
+        showEditor = false;
+        navigate("/");
+      } else {
+        console.log(res);
+      }
+    } catch (e) {}
+  };
 
-  // // $: {
-  // //   // console.clear();
-  // //   console.log(newPostContent.text);
-  // // }
+  // $: {
+  //   // console.clear();
+  //   console.log(newPostContent.text);
+  // }
+
   let onTextChange = (e: any) => {
     console.log(e.detail);
     if (showEditor) {
@@ -89,7 +86,7 @@
 </script>
 
 <svelte:head>
-  <title>Feed</title>
+  <title>Showing Posts</title>
 </svelte:head>
 
 {#if showEditor}
@@ -124,18 +121,24 @@
             class="flex flex-col items-center min-h-[2rem] w-[280px] bg-slate-800 border border-slate-600 rounded-lg z-20 overflow-hidden"
             style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(281px, 83px);"
           >
-            {#each groups as group}
-              <button
-                type="button"
-                class="w-full py-4 px-4 transition-all hover:bg-slate-700 text-left"
-                on:click={() => {
-                  selected_group = group;
-                  showGroupDropdown = false;
-                }}
-              >
-                {group.name}
-              </button>
-            {/each}
+            {#await load_groups}
+              <div>Loading...</div>
+            {:then}
+              {#each groups as group}
+                <button
+                  type="button"
+                  class="w-full py-4 px-4 transition-all hover:bg-slate-700 text-left"
+                  on:click={() => {
+                    selected_group = group;
+                    showGroupDropdown = false;
+                  }}
+                >
+                  {group.name}
+                </button>
+              {/each}
+            {:catch e}
+              <p>{e}</p>
+            {/await}
           </div>
         {/if}
 
@@ -165,7 +168,6 @@
         <button
           type="button"
           class="resize-none rounded-lg font-semibold text-xl transition-all outline-none hover:text-emerald-400"
-       
           ><FaIcon icon="paper-plane" />&nbsp;&nbsp;Send</button
         >
       </div>
