@@ -25,3 +25,7 @@ dist-ssr
 *.sln
 *.sw?
 *.bak
+*.txt
+*.json
+*.md
+*.csv
