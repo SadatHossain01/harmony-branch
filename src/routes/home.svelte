@@ -17,13 +17,12 @@
 <!-- Tree -->
 <Router>
   <!-- now the tabs here -->
-  <!-- <Route path="/">
+  <Route path="/">
     <div class="pt-20 w-full h-screen flex overflow-hidden">
       <GroupTree groups={$groups} />
       <Tabs />
-      <Feed />
     </div>
-  </Route> -->
+  </Route>
   <Route path="/feed">
     <div class="pt-20 w-full h-screen flex overflow-hidden">
       <GroupTree groups={$groups} />
