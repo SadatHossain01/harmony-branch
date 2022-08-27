@@ -6,7 +6,7 @@ export const groups: Writable<Group[]> = writable<Group[]>([
       id: "1",
       name: "BUET CSE 19",
       intro: "",
-      image_link: "",
+      image_link: `https://source.unsplash.com/random/1`,
       group_link: "",
       subjects: [
         { id: "1", name: "CSE215" },
@@ -18,7 +18,7 @@ export const groups: Writable<Group[]> = writable<Group[]>([
       id: "2",
       name: "Harmony devs",
       intro: "",
-      image_link: "",
+      image_link: `https://source.unsplash.com/random/2`,
       group_link: "",
       subjects: [
         { id: "1", name: "Frontend" },
