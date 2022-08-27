@@ -64,7 +64,7 @@ export let loadGroups = async () => {
   try {
     await getGroups();
   } catch (e) {
-    navigate("/login");
+    navigate("/login"); 
   }
 };
 
