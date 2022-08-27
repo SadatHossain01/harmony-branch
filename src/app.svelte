@@ -19,7 +19,6 @@
     ["Login", "/login"],
     ["Register", "/register"],
     ["Edit Profile", "/editprofile"],
-    ["Feed", "/"],
     ["Home", "/home"],
     ["My Groups", "/mygroups"],
   ]);
@@ -30,7 +29,7 @@
     <Nav {routes} />
     <div class="">
       <Route path="/">
-        <Feed />
+        <Home />
       </Route>
       <Route path="/about">
         <About />

@@ -1,11 +1,10 @@
 <script lang="ts">
+  import { linear } from "svelte/easing";
   import { scale } from "svelte/transition";
   export let poster = "";
   export let time = ""; //when it was posted
+  export let dp: string | null = null;
   export let post: string = "";
-  // let showComments = false;
-
-  // $: showCommentStatement = showComments ? "Hide Comments" : "Show Comments";
 </script>
 
 <div
@@ -16,11 +15,15 @@
     <div
       class="w-14 h-14 border border-slate-600 rounded-full overflow-hidden flex justify-center items-center mr-4 flex-shrink-0"
     >
-      <img
-        src="https://www.gravatar.com/avatar/{poster.length}?s=47&d=robohash"
-        alt={poster}
-        class="object-cover w-full h-full"
-      />
+      {#if dp == null}
+        <img
+          src="https://www.gravatar.com/avatar/{poster.length}?s=47&d=robohash"
+          alt={poster}
+          class="object-cover w-full h-full"
+        />
+      {:else}
+        <img src={dp} alt={poster} class="object-cover w-full h-full" />
+      {/if}
     </div>
 
     <div class="p-2">
@@ -32,6 +35,9 @@
         {#each post.split("\n") as line}
           <p>
             {line}
+            {#if line.trim().length == 0}
+              <br />
+            {/if}
           </p>
         {/each}
       </div>
