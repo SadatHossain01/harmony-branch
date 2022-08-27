@@ -43,7 +43,56 @@
     notifyTarget.removeEventListener("group-message", handleNewMessage);
   });
 
-  let messages: Message[] = [];
+  let messages: Message[] = [
+    {
+      id: "1",
+      sender_name: "John",
+      sender_id: "1",
+      content: "Hello",
+      time: new Date(),
+      sender_dp: null,
+    },
+    {
+      id: "1",
+      sender_name: "John",
+      sender_id: "1",
+      content: "Hello",
+      time: new Date(),
+      sender_dp: null,
+    },
+    {
+      id: "1",
+      sender_name: "John",
+      sender_id: "1",
+      content: "Hello",
+      time: new Date(),
+      sender_dp: null,
+    },
+    {
+      id: "2",
+      sender_name: "John",
+      sender_id: "1",
+      content: "Hello",
+      time: new Date(),
+      sender_dp: null,
+    },
+    {
+      id: "3",
+      sender_name: "John",
+      sender_id: "1",
+      content: "Hello",
+      time: new Date(),
+      sender_dp: null,
+    },
+    {
+      id: "4",
+      sender_name: "John",
+      sender_id: "1",
+      content: "Hello",
+      time: new Date(),
+      sender_dp: null,
+    },
+  ];
 
   let editText: string;
 
@@ -81,7 +130,7 @@
   };
 </script>
 
-<div class="h-full w-10/12">
+<div class="h-full w-full">
   <!-- Chat Viewer -->
   {#await loadPromise}
     <p class="mx-auto mt-2">Loading...</p>
