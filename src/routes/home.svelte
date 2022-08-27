@@ -26,9 +26,11 @@
   <Route path="/feed">
     <div class="pt-20 w-full h-screen flex overflow-hidden">
       <GroupTree groups={$groups} />
-      <div class="w-10/12 flex-shrink-0">
+      <div class="w-10/12 flex-shrink-0 h-full">
         <Tabs />
-        <Feed />
+        <div class="h-full overflow-y-scroll pb-12">
+          <Feed />
+        </div>
       </div>
     </div>
   </Route>
@@ -37,7 +39,9 @@
       <GroupTree groups={$groups} />
       <div class="w-10/12 flex-shrink-0">
         <Tabs />
-        <Myevents />
+        <div class="h-full overflow-y-scroll pb-12">
+          <Myevents />
+        </div>
       </div>
     </div>
   </Route>
@@ -46,7 +50,9 @@
       <GroupTree groups={$groups} />
       <div class="w-10/12 flex-shrink-0">
         <Tabs />
-        <Chats />
+        <div class="h-full overflow-y-scroll pb-12">
+          <Chats />
+        </div>
       </div>
     </div>
   </Route>
@@ -55,7 +61,9 @@
       <GroupTree groups={$groups} />
       <div class="w-10/12 flex-shrink-0">
         <Tabs />
-        <Mypolls />
+        <div class="h-full overflow-y-scroll pb-12">
+          <Mypolls />
+        </div>
       </div>
     </div>
   </Route>
@@ -64,7 +72,9 @@
       <GroupTree groups={$groups} />
       <div class="w-10/12 flex-shrink-0">
         <Tabs />
-        <Archive />
+        <div class="h-full overflow-y-scroll">
+          <Archive />
+        </div>
       </div>
     </div>
   </Route>
