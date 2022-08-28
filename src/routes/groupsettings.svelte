@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Group } from "../lib/data/groups";
+  import type { User } from "../lib/data/user";
   export let group: Group = {
     id: "1",
     name: "BUET CSE 19",
@@ -9,6 +10,19 @@
     group_link: "",
     subjects: [{ name: "CSE215", id: "1" }],
   };
+
+  let users = [
+    {
+      id: "1",
+      user_name: "Shahriar",
+      dp_link: "https://source.unsplash.com/random/" + Math.random(),
+    },
+    {
+      id: "2",
+      user_name: "Asif",
+      dp_link: "https://source.unsplash.com/random/" + Math.random(),
+    },
+  ];
   let input_name: string = group.name;
   let name_input_clicked: boolean = false;
   let input_intro: string = group.intro;
@@ -66,7 +80,7 @@
         <button
           class="text-base font-normal text-gray-500 lg:text-xl dark:text-gray-400 text-center mx-auto w-3/4"
         >
-          {group.intro}
+          {input_intro}
         </button>
       {:else}
         <!-- svelte-ignore a11y-autofocus -->
@@ -78,7 +92,7 @@
             class="w-3/4 text-base lg:text-xl font-normal text-gray-500 bg-white border-0 dark:bg-slate-900 focus:ring-0 dark:text-gray-400 dark:placeholder-gray-400 grid mx-auto h-auto text-center"
             placeholder="Group Intro"
             required
-            bind:value={group.intro}
+            bind:value={input_intro}
             maxlength="140"
             autofocus
           />
@@ -88,5 +102,36 @@
     <hr
       class="my-1 mx-auto w-48 h-1 bg-gray-100 rounded border-0 md:my-10 dark:bg-gray-700"
     />
+    <div>
+      <ul
+        class="overflow-y-auto py-1 h-48 text-gray-700 dark:text-gray-200 w-3/4 mx-auto"
+        aria-labelledby="dropdownUsersButton"
+      >
+        <div class="flex flex-col">
+          {#each users as user}
+            <li>
+              <a
+                href="#"
+                class="flex items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white rounded-lg"
+              >
+                <img
+                  class="mr-2 w-14 h-14 rounded-full"
+                  src={user.dp_link}
+                  alt="image"
+                />
+                <div class="text-lg pl-5">
+                  {user.user_name}
+                </div>
+                <button
+                  type="button"
+                  class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                  >Kick</button
+                >
+              </a>
+            </li>
+          {/each}
+        </div>
+      </ul>
+    </div>
   </div>
 </div>
