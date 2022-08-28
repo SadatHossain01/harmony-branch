@@ -2,17 +2,12 @@
   import { Router, Link, Route } from "svelte-navigator";
   import Nav from "./lib/nav.svelte";
   import About from "./routes/about.svelte";
-  import Feed from "./routes/feed.svelte";
   import EditProfile from "./routes/editprofile.svelte";
   import Login from "./routes/login.svelte";
   import Register from "./routes/register.svelte";
   import Mygroups from "./routes/mygroups.svelte";
-  import Myevents from "./routes/myevents.svelte";
-  import Chats from "./routes/chats.svelte";
-  import QuillDemo from "./routes/quillDemo.svelte";
-  import Mypolls from "./routes/mypolls.svelte";
-  import Archive from "./routes/archive.svelte";
   import Home from "./routes/home.svelte";
+  import GroupSettings from "./routes/groupsettings.svelte";
 
   const routes: Map<string, string> = new Map([
     ["Home", "/home"],
@@ -21,6 +16,7 @@
     ["Login", "/login"],
     ["Register", "/register"],
     ["About", "/about"],
+    ["Group Settings", "/groupsettings"],
   ]);
 </script>
 
@@ -48,6 +44,9 @@
       </Route>
       <Route path="/home/*">
         <Home />
+      </Route>
+      <Route path="/groupsettings">
+        <GroupSettings />
       </Route>
     </div>
   </div>
