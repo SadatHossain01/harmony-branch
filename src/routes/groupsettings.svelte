@@ -140,6 +140,33 @@
       showable_users = users;
     }
   }
+
+  let input;
+  let image;
+  let warning: boolean = false;
+  let warningText: string;
+  let newPicture: boolean = false;
+  let showimage: boolean = false;
+  let pictureSrc: string = group.image_link;
+
+  const onChange = async () => {
+    const file: File = input.files[0];
+
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        warning = true;
+        warningText = "Image size too large. Image should be under 5 MB";
+      } else {
+        newPicture = true;
+        showimage = true;
+        const reader = new FileReader();
+        reader.addEventListener("load", function () {
+          pictureSrc = reader.result as string;
+        });
+        reader.readAsDataURL(file);
+      }
+    } else showimage = false;
+  };
 </script>
 
 <svelte:window
@@ -158,16 +185,22 @@
   <!-- svelte-ignore a11y-img-redundant-alt -->
   <div class="w-3/4 mx-auto grid relative">
     <img
-      class="mb-3 w-80 h-80 rounded-full shadow-lg mx-auto mt-5 z-0"
-      src={group.image_link}
+      class="mb-3 w-80 h-80 rounded-full shadow-lg mx-auto mt-5 z-0 hover:cursor-pointer object-cover"
+      src={pictureSrc}
       alt="Group Photo"
+      bind:this={image}
+      on:click={() => {
+        document.getElementById("file-upload").click();
+      }}
     />
     <input
       id="file-upload"
       type="file"
       accept=".jpg, .png, .jpeg, .gif"
       title=""
-      class="mb-3 w-80 h-80 rounded-full mt-5 absolute left-1/2 transform -translate-x-1/2 z-10 text-transparent hover:cursor-pointer bg-transparent"
+      class="mb-3 w-80 h-80 rounded-full mt-5 absolute left-1/2 transform -translate-x-1/2 z-10 text-transparent hover:cursor-pointer bg-transparent hidden"
+      bind:this={input}
+      on:change={onChange}
     />
     <div
       class="grid justify-self-center mb-5"
