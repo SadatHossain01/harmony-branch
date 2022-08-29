@@ -5,7 +5,6 @@
   import type { Group } from "./data/groups";
   import { selected_tab } from "./stores/tab";
   import GroupSettings from "../routes/groupsettings.svelte";
-  import { current_edited_group } from "./stores/groups";
   //declare an object with name, intro, institution, image_link, department, group_link and batch
   export let group: Group;
 
@@ -73,7 +72,8 @@
             <div
               class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white hover:cursor-pointer"
               on:click={() => {
-                $current_edited_group = group;
+                $current_group = group;
+                $current_subject = $current_group.subjects[0];
                 navigate("/groupsettings");
               }}
             >

@@ -16,7 +16,6 @@
     ["Login", "/login"],
     ["Register", "/register"],
     ["About", "/about"],
-    ["Group Settings", "/groupsettings"],
   ]);
 </script>
 
