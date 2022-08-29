@@ -3,15 +3,7 @@
   import FaIcon from "../lib/faIcon.svelte";
   import type { User } from "../lib/data/user";
   import { fade } from "svelte/transition";
-  export let group: Group = {
-    id: "1",
-    name: "BUET CSE 19",
-    intro:
-      "Email is an excellent way to introduce yourself and your business without the feeling of intrusion that can come with cold calling. Adios!!! ",
-    image_link: `https://source.unsplash.com/random/1`,
-    group_link: "",
-    subjects: [{ name: "CSE215", id: "1" }],
-  };
+  import { current_edited_group } from "../lib/stores/groups";
 
   let members = [
     {
@@ -112,9 +104,9 @@
   let search_member: string = "";
   let showable_users = users;
   let search_user: string = "";
-  let input_name: string = group.name;
+  let input_name: string = $current_edited_group.name;
   let name_input_clicked: boolean = false;
-  let input_intro: string = group.intro;
+  let input_intro: string = $current_edited_group.intro;
   let intro_input_clicked: boolean = false;
 
   $: {
@@ -148,7 +140,7 @@
   let warningText: string;
   let newPicture: boolean = false;
   let showimage: boolean = false;
-  let pictureSrc: string = group.image_link;
+  let pictureSrc: string = $current_edited_group.image_link;
   let delete_clicked: boolean = false;
 
   const onChange = async () => {
@@ -175,8 +167,8 @@
   on:click={() => {
     name_input_clicked = false;
     intro_input_clicked = false;
-    group.name = input_name;
-    group.intro = input_intro;
+    $current_edited_group.name = input_name;
+    $current_edited_group.intro = input_intro;
     // do the db stuffs right here
     // submit/update button seems redundant here to me, hence not using
     console.log("clicked outside");
@@ -298,7 +290,7 @@
         <button
           class="text-2xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white text-center h-full"
         >
-          {group.name}
+          {$current_edited_group.name}
         </button>
       {:else}
         <!-- svelte-ignore a11y-autofocus -->
@@ -309,7 +301,7 @@
           on:keydown={(e) => {
             if (e.key === "Enter" && !e.ctrlKey && !e.shiftKey) {
               name_input_clicked = false;
-              group.name = input_name;
+              $current_edited_group.name = input_name;
             }
           }}
         />
@@ -344,7 +336,7 @@
             on:keydown={(e) => {
               if (e.key === "Enter" && !e.ctrlKey && !e.shiftKey) {
                 intro_input_clicked = false;
-                group.intro = input_intro;
+                $current_edited_group.intro = input_intro;
               }
             }}
           />
