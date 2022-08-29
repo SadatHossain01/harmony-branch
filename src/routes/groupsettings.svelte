@@ -352,7 +352,7 @@
     />
     <div class="grid grid-cols-2 py-3 mb-20">
       <div
-        class="sm:col-span-2 lg:col-span-1 sm:border-none lg:border-r-2 lg:border-slate-600 ml-20 pt-2"
+        class="sm:col-span-2 lg:col-span-1 lg:border-r-2 lg:border-slate-600 ml-20 pt-2"
       >
         <h2 class="text-2xl font-bold dark:text-white">Current Members</h2>
         <div class="grid place-content-left my-3">
@@ -454,6 +454,40 @@
                       class="text-white bg-green-700 w-1/10 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800"
                       ><FaIcon icon="user-plus" />&nbsp;&nbsp;Add</button
                     >
+                  </div>
+                </div>
+              </li>
+            {/each}
+          </div>
+        </ul>
+      </div>
+      <div class="place-self-center col-span-2 mt-20 w-1/3">
+        <h1 class="text-4xl font-bold dark:text-white">Subjects</h1>
+        <ul
+          class="overflow-y-auto py-1 h-80 text-gray-700 dark:text-gray-200 w-10/12 ml-0"
+          aria-labelledby="dropdownUsersButton"
+        >
+          <div class="flex flex-col">
+            {#each $current_group.subjects as subject}
+              <li>
+                <div
+                  class="flex justify-between items-center py-2 pr-2 pl-1 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white rounded-lg"
+                >
+                  <div class="flex">
+                    <div class="text-lg pl-5 place-self-center">
+                      {subject.name}
+                    </div>
+                  </div>
+                  <div>
+                    <button
+                      class="h-12 w-12 shadow-xl text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-full lg:ml-40 ml-10 text-sm mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
+                      type="button"
+                      data-drawer-target="drawer-form"
+                      data-drawer-show="drawer-form"
+                      aria-controls="drawer-form"
+                    >
+                      <FaIcon type="regular" icon="minus" className="text-xl" />
+                    </button>
                   </div>
                 </div>
               </li>
