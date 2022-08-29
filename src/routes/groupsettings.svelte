@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Group } from "../lib/data/groups";
+  import FaIcon from "../lib/faIcon.svelte";
   import type { User } from "../lib/data/user";
   export let group: Group = {
     id: "1",
@@ -23,10 +24,24 @@
       dp_link: "https://source.unsplash.com/random/" + Math.random(),
     },
   ];
+  let showable_users = users;
+  let search_term: string = "";
   let input_name: string = group.name;
   let name_input_clicked: boolean = false;
   let input_intro: string = group.intro;
   let intro_input_clicked: boolean = false;
+
+  $: {
+    if (search_term) {
+      // console.log(search_term);
+      //filter groups based on search term, considering name, intro, institution, department, batch
+      showable_users = users.filter((user) => {
+        return user.user_name.toLowerCase().includes(search_term.toLowerCase());
+      });
+    } else {
+      showable_users = users;
+    }
+  }
 </script>
 
 <svelte:window
@@ -103,31 +118,54 @@
       class="my-1 mx-auto w-48 h-1 bg-gray-100 rounded border-0 md:my-10 dark:bg-gray-700"
     />
     <div>
+      <h2 class="text-2xl font-bold dark:text-white">Current Members</h2>
+      <div class="grid place-content-left my-3">
+        <div class="relative mt-1">
+          <div
+            class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+          >
+            <FaIcon
+              icon="search"
+              className="flex justify-center items-center w-5 h-5 text-gray-500 dark:text-gray-400"
+            />
+          </div>
+          <input
+            type="text"
+            id="table-search"
+            class="block p-2 pl-10 w-80 text-sm font-OpenSans text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Search members"
+            bind:value={search_term}
+          />
+        </div>
+      </div>
       <ul
-        class="overflow-y-auto py-1 h-48 text-gray-700 dark:text-gray-200 w-3/4 mx-auto"
+        class="overflow-y-auto py-1 h-48 text-gray-700 dark:text-gray-200 w-1/3 ml-0"
         aria-labelledby="dropdownUsersButton"
       >
         <div class="flex flex-col">
-          {#each users as user}
+          {#each showable_users as user}
             <li>
-              <a
-                href="#"
-                class="flex items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white rounded-lg"
+              <div
+                class="flex justify-between items-center py-2 pr-4 pl-1 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white rounded-lg"
               >
-                <img
-                  class="mr-2 w-14 h-14 rounded-full"
-                  src={user.dp_link}
-                  alt="image"
-                />
-                <div class="text-lg pl-5">
-                  {user.user_name}
+                <div class="flex">
+                  <img
+                    class="mr-2 w-14 h-14 rounded-full place-self-center"
+                    src={user.dp_link}
+                    alt="image"
+                  />
+                  <div class="text-lg pl-5 place-self-center">
+                    {user.user_name}
+                  </div>
                 </div>
-                <button
-                  type="button"
-                  class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                  >Kick</button
-                >
-              </a>
+                <div>
+                  <button
+                    type="button"
+                    class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
+                    ><FaIcon icon="user-minus" />&nbsp;&nbsp;Remove</button
+                  >
+                </div>
+              </div>
             </li>
           {/each}
         </div>
