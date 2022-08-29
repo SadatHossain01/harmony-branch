@@ -1,5 +1,7 @@
 <script lang="ts">
   import ShowPollitem from "../lib/showpollitem.svelte";
+  import { fade } from "svelte/transition";
+  import { flip } from "svelte/animate";
   import Drawer from "../lib/drawer.svelte";
   import FaIcon from "../lib/faIcon.svelte";
   import type { Poll } from "../lib/data/polls";
@@ -248,6 +250,57 @@
   };
 
   let draweropen: boolean = false;
+
+  function removeOption(id: string) {
+    //decrement the count of votes of the options which have been removed
+    newPoll.options.forEach((option) => {
+      if (option.optionid === id) {
+        newPoll.totalvote -= option.vote_count;
+      }
+    });
+    //remove the option from the poll
+    newPoll.options = newPoll.options.filter((option) => {
+      return option.optionid !== id;
+    });
+    if (newPoll.votedOption === id) {
+      newPoll.votedOption = "-1";
+    }
+  }
+
+  function addNewOption() {
+    //add an empty option to the poll
+    //take the maximum of all existing and add 1 to that
+    console.log("add new option");
+    let max = 0;
+    newPoll.options.forEach((option) => {
+      if (Number(option.optionid) > max) max = Number(option.optionid);
+    }),
+      max++;
+    newPoll.options.push({
+      pollid: newPoll.id,
+      optionid: max.toString(),
+      option_title: "New Option",
+      description: "",
+      vote_count: 0,
+      width: 0,
+    });
+    newPoll.options = newPoll.options;
+  }
+
+  function confirmupdate() {
+    console.log("confirm update");
+    //copy newPoll into poll
+    newPoll = {
+      id: newPoll.id,
+      title: newPoll.title,
+      // description: newPoll.description,
+      options: [...newPoll.options],
+      totalvote: newPoll.totalvote,
+      votedOption: newPoll.votedOption,
+    };
+    // poll = temp;
+    //update in database as well
+  }
 </script>
 
 <svelte:window on:click|stopPropagation={() => (draweropen = false)} />
@@ -303,6 +356,67 @@
           required
           bind:value={newPoll.title}
         />
+      </div>
+      {#each newPoll.options as option (Number(option.optionid))}
+        <div
+          animate:flip
+          class="bg-gray-700 rounded-lg p-2 my-2"
+          transition:fade|local
+        >
+          <div class="flex justify-end">
+            <label
+              for="title"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 align-middle"
+              >Option Title</label
+            >
+            <button
+              class="text-gray-400 bg-transparent {newPoll.options.length === 1
+                ? 'cursor-not-allowed'
+                : 'hover:bg-gray-200 hover:text-gray-900'} rounded-lg align-middle text-sm ml-auto inline-flex items-center {newPoll
+                .options.length > 1 &&
+                'dark:hover:bg-gray-800 dark:hover:text-white'}"
+              type="button"
+              on:click={() => removeOption(option.optionid)}
+              disabled={newPoll.options.length === 1}
+            >
+              <FaIcon
+                type="regular"
+                icon="minus"
+                className="text-sm px-2 py-1"
+              />
+            </button>
+          </div>
+          <div class="mb-2">
+            <input
+              type="text"
+              id="title"
+              class="bg-gray-50 my-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              bind:value={option.option_title}
+              required
+            />
+          </div>
+          <div>
+            <label
+              for="description"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+              >Option Description (50 characters)</label
+            >
+            <textarea
+              id="description"
+              rows="2"
+              maxlength="50"
+              class="block p-2.5 my-1 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              bind:value={option.description}
+            />
+          </div>
+        </div>
+      {/each}
+      <div class="flex justify-center mx-auto my-5">
+        <button
+          type="button"
+          class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+          on:click={() => addNewOption()}>Add Option</button
+        >
       </div>
       <button
         type="submit"
