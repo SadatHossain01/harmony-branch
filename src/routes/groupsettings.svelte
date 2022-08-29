@@ -48,6 +48,8 @@
   on:click={() => {
     name_input_clicked = false;
     intro_input_clicked = false;
+    group.name = input_name;
+    group.intro = input_intro;
     // do the db stuffs right here
     // submit/update button seems redundant here to me, hence not using
     console.log("clicked outside");
