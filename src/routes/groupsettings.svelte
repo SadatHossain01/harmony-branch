@@ -156,11 +156,18 @@
 
 <div class="bg-slate-900 pt-20">
   <!-- svelte-ignore a11y-img-redundant-alt -->
-  <div class="w-3/4 mx-auto grid">
+  <div class="w-3/4 mx-auto grid relative">
     <img
-      class="mb-3 w-80 h-80 rounded-full shadow-lg mx-auto mt-5"
+      class="mb-3 w-80 h-80 rounded-full shadow-lg mx-auto mt-5 z-0"
       src={group.image_link}
       alt="Group Photo"
+    />
+    <input
+      id="file-upload"
+      type="file"
+      accept=".jpg, .png, .jpeg, .gif"
+      title=""
+      class="mb-3 w-80 h-80 rounded-full mt-5 absolute left-1/2 transform -translate-x-1/2 z-10 text-transparent hover:cursor-pointer bg-transparent"
     />
     <div
       class="grid justify-self-center mb-5"
