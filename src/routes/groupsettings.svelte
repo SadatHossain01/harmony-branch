@@ -119,59 +119,61 @@
     <hr
       class="my-1 mx-auto w-48 h-1 bg-gray-100 rounded border-0 md:my-10 dark:bg-gray-700"
     />
-    <div>
-      <h2 class="text-2xl font-bold dark:text-white">Current Members</h2>
-      <div class="grid place-content-left my-3">
-        <div class="relative mt-1">
-          <div
-            class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
-          >
-            <FaIcon
-              icon="search"
-              className="flex justify-center items-center w-5 h-5 text-gray-500 dark:text-gray-400"
+    <div class="grid grid-cols-2 py-3">
+      <div class="col-span-1 border-r-2 border-slate-600">
+        <h2 class="text-2xl font-bold dark:text-white">Current Members</h2>
+        <div class="grid place-content-left my-3">
+          <div class="relative mt-1">
+            <div
+              class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+            >
+              <FaIcon
+                icon="search"
+                className="flex justify-center items-center w-5 h-5 text-gray-500 dark:text-gray-400"
+              />
+            </div>
+            <input
+              type="text"
+              id="table-search"
+              class="block p-2 pl-10 w-80 text-sm font-OpenSans text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Search members"
+              bind:value={search_term}
             />
           </div>
-          <input
-            type="text"
-            id="table-search"
-            class="block p-2 pl-10 w-80 text-sm font-OpenSans text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Search members"
-            bind:value={search_term}
-          />
         </div>
-      </div>
-      <ul
-        class="overflow-y-auto py-1 h-48 text-gray-700 dark:text-gray-200 w-1/3 ml-0"
-        aria-labelledby="dropdownUsersButton"
-      >
-        <div class="flex flex-col">
-          {#each showable_users as user}
-            <li>
-              <div
-                class="flex justify-between items-center py-2 pr-4 pl-1 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white rounded-lg"
-              >
-                <div class="flex">
-                  <img
-                    class="mr-2 w-14 h-14 rounded-full place-self-center"
-                    src={user.dp_link}
-                    alt="image"
-                  />
-                  <div class="text-lg pl-5 place-self-center">
-                    {user.user_name}
+        <ul
+          class="overflow-y-auto py-1 h-48 text-gray-700 dark:text-gray-200 w-9/12 ml-0"
+          aria-labelledby="dropdownUsersButton"
+        >
+          <div class="flex flex-col">
+            {#each showable_users as user}
+              <li>
+                <div
+                  class="flex justify-between items-center py-2 pr-2 pl-1 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white rounded-lg"
+                >
+                  <div class="flex">
+                    <img
+                      class="mr-2 w-14 h-14 rounded-full place-self-center"
+                      src={user.dp_link}
+                      alt="image"
+                    />
+                    <div class="text-md pl-5 place-self-center">
+                      {user.user_name}
+                    </div>
+                  </div>
+                  <div>
+                    <button
+                      type="button"
+                      class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
+                      ><FaIcon icon="user-minus" />&nbsp;&nbsp;Remove</button
+                    >
                   </div>
                 </div>
-                <div>
-                  <button
-                    type="button"
-                    class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
-                    ><FaIcon icon="user-minus" />&nbsp;&nbsp;Remove</button
-                  >
-                </div>
-              </div>
-            </li>
-          {/each}
-        </div>
-      </ul>
+              </li>
+            {/each}
+          </div>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
