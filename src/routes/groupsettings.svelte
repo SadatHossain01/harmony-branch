@@ -6,7 +6,7 @@
     id: "1",
     name: "BUET CSE 19",
     intro:
-      "Email is an excellent way to introduce yourself and your business without the feeling of intrusion that can come with cold calling. To save time, download our free business introduction email templates and optimize them following our tips for best practices. The templates can be easily adapted to a variety of scenarios to achieve your objectives in email introductions to leads, customers, potential partners, and other new contacts.",
+      "Email is an excellent way to introduce yourself and your business without the feeling of intrusion that can come with cold calling. Adios!!! ",
     image_link: `https://source.unsplash.com/random/1`,
     group_link: "",
     subjects: [{ name: "CSE215", id: "1" }],
@@ -83,6 +83,12 @@
           class="text-2xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white text-center bg-slate-900 h-full"
           bind:value={input_name}
           autofocus
+          on:keydown={(e) => {
+            if (e.key === "Enter" && !e.ctrlKey && !e.shiftKey) {
+              name_input_clicked = false;
+              group.name = input_name;
+            }
+          }}
         />
       {/if}
     </div>
@@ -106,12 +112,18 @@
           <textarea
             id="comment"
             rows="4"
-            class="w-3/4 text-base lg:text-xl font-normal text-gray-500 bg-white border-0 dark:bg-slate-900 focus:ring-0 dark:text-gray-400 dark:placeholder-gray-400 grid mx-auto h-auto text-center"
+            class="w-3/4 text-base lg:text-xl font-normal text-gray-500 bg-white border-0 dark:bg-slate-900 focus:ring-0 dark:text-gray-400 dark:placeholder-gray-400 grid mx-auto h-[65px] text-center overflow-y-scroll"
             placeholder="Group Intro"
             required
             bind:value={input_intro}
             maxlength="140"
             autofocus
+            on:keydown={(e) => {
+              if (e.key === "Enter" && !e.ctrlKey && !e.shiftKey) {
+                intro_input_clicked = false;
+                group.intro = input_intro;
+              }
+            }}
           />
         </div>
       {/if}
