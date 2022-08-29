@@ -461,10 +461,10 @@
           </div>
         </ul>
       </div>
-      <div class="place-self-center col-span-2 mt-20 w-1/3">
+      <div class="place-self-center col-span-2 mt-20 w-2/5">
         <h1 class="text-4xl font-bold dark:text-white">Subjects</h1>
         <ul
-          class="overflow-y-auto py-1 h-80 text-gray-700 dark:text-gray-200 w-10/12 ml-0"
+          class="overflow-y-auto py-1 h-fit text-gray-700 dark:text-gray-200 w-10/12 ml-0"
           aria-labelledby="dropdownUsersButton"
         >
           <div class="flex flex-col">
