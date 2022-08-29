@@ -113,6 +113,7 @@
   let name_input_clicked: boolean = false;
   let input_intro: string = $current_group.intro;
   let intro_input_clicked: boolean = false;
+  let new_subject_name: string = "";
 
   $: {
     if (search_member) {
@@ -480,7 +481,7 @@
                   </div>
                   <div>
                     <button
-                      class="h-12 w-12 shadow-xl text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-full lg:ml-40 ml-10 text-sm mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
+                      class="h-11 w-11 shadow-xl text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-full lg:ml-40 ml-10 text-sm mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
                       type="button"
                       data-drawer-target="drawer-form"
                       data-drawer-show="drawer-form"
@@ -494,6 +495,35 @@
             {/each}
           </div>
         </ul>
+        <div class="flex">
+          <div class="relative z-0 w-3/6 ml-4">
+            <input
+              type="text"
+              id="floating_standard"
+              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
+              bind:value={new_subject_name}
+            />
+            <label
+              for="floating_standard"
+              class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >Subject Name</label
+            >
+          </div>
+          <button
+            type="button"
+            class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 mx-auto py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+            on:click={() => {
+              //push this new subject to subjects
+              $current_group.subjects.push({
+                id: $current_group.subjects.length + 1 + "",
+                name: new_subject_name,
+              });
+              new_subject_name = "";
+              $current_group.subjects = $current_group.subjects;
+            }}>Confirm</button
+          >
+        </div>
       </div>
     </div>
   </div>
