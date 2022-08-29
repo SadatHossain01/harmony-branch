@@ -181,6 +181,7 @@
             placeholder="A few words about the group..."
             {maxlength}
             bind:value={intro}
+            required
           />
         </div>
 

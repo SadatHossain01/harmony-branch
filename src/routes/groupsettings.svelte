@@ -3,7 +3,12 @@
   import FaIcon from "../lib/faIcon.svelte";
   import type { User } from "../lib/data/user";
   import { fade } from "svelte/transition";
-  import { current_group } from "../lib/stores/groups";
+  import { current_group, current_subject } from "../lib/stores/groups";
+  import { groups } from "../lib/stores/groups";
+  if (!$current_group) {
+    $current_group = $groups[0];
+    $current_subject = $current_group.subjects[0];
+  }
 
   let members = [
     {
@@ -167,10 +172,9 @@
   on:click={() => {
     name_input_clicked = false;
     intro_input_clicked = false;
-    $current_group.name = input_name;
-    $current_group.intro = input_intro;
-    // do the db stuffs right here
-    // submit/update button seems redundant here to me, hence not using
+    input_name = $current_group.name;
+    input_intro = $current_group.intro;
+    //everything will be finalized on enter
     console.log("clicked outside");
   }}
 />
@@ -301,7 +305,7 @@
           on:keydown={(e) => {
             if (e.key === "Enter" && !e.ctrlKey && !e.shiftKey) {
               name_input_clicked = false;
-              $current_group.name = input_name;
+              if (input_name) $current_group.name = input_name;
             }
           }}
         />
@@ -336,7 +340,7 @@
             on:keydown={(e) => {
               if (e.key === "Enter" && !e.ctrlKey && !e.shiftKey) {
                 intro_input_clicked = false;
-                $current_group.intro = input_intro;
+                if (input_intro) $current_group.intro = input_intro;
               }
             }}
           />
@@ -347,7 +351,9 @@
       class="my-1 mx-auto w-48 h-1 bg-gray-100 rounded border-0 md:my-10 dark:bg-gray-700"
     />
     <div class="grid grid-cols-2 py-3 mb-20">
-      <div class="col-span-1 border-r-2 border-slate-600 ml-20">
+      <div
+        class="sm:col-span-2 lg:col-span-1 sm:border-none lg:border-r-2 lg:border-slate-600 ml-20 pt-2"
+      >
         <h2 class="text-2xl font-bold dark:text-white">Current Members</h2>
         <div class="grid place-content-left my-3">
           <div class="relative mt-1">
@@ -362,14 +368,14 @@
             <input
               type="text"
               id="table-search"
-              class="block p-2 pl-10 w-80 text-sm font-OpenSans text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              class="block p-2 pl-10 w-1/2 text-sm font-OpenSans text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Search members"
               bind:value={search_member}
             />
           </div>
         </div>
         <ul
-          class="overflow-y-auto py-1 h-80 text-gray-700 dark:text-gray-200 w-9/12 ml-0"
+          class="overflow-y-auto py-1 h-80 text-gray-700 dark:text-gray-200 w-10/12 ml-0"
           aria-labelledby="dropdownUsersButton"
         >
           <div class="flex flex-col">
@@ -391,7 +397,7 @@
                   <div>
                     <button
                       type="button"
-                      class="text-white bg-red-700 hover:bg-red-800 w-[118px] focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
+                      class="text-white bg-red-700 hover:bg-red-800 w-1/10 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
                       ><FaIcon icon="user-minus" />&nbsp;&nbsp;Remove</button
                     >
                   </div>
@@ -401,7 +407,7 @@
           </div>
         </ul>
       </div>
-      <div class="col-span-1 ml-20">
+      <div class="sm:col-span-2 lg:col-span-1 ml-20 pt-2">
         <h2 class="text-2xl font-bold dark:text-white">Add Members</h2>
         <div class="grid place-content-left my-3">
           <div class="relative mt-1">
@@ -416,14 +422,14 @@
             <input
               type="text"
               id="table-search"
-              class="block p-2 pl-10 w-80 text-sm font-OpenSans text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              class="block p-2 pl-10 w-1/2 text-sm font-OpenSans text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Search users"
               bind:value={search_user}
             />
           </div>
         </div>
         <ul
-          class="overflow-y-auto py-1 h-80 text-gray-700 dark:text-gray-200 w-9/12 ml-0"
+          class="overflow-y-auto py-1 h-80 text-gray-700 dark:text-gray-200 w-10/12 ml-0"
           aria-labelledby="dropdownUsersButton"
         >
           <div class="flex flex-col">
@@ -445,7 +451,7 @@
                   <div>
                     <button
                       type="button"
-                      class="text-white bg-green-700 w-[118px] hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800"
+                      class="text-white bg-green-700 w-1/10 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800"
                       ><FaIcon icon="user-plus" />&nbsp;&nbsp;Add</button
                     >
                   </div>
