@@ -184,24 +184,34 @@
 <div class="bg-slate-900 pt-20">
   <!-- svelte-ignore a11y-img-redundant-alt -->
   <div class="w-3/4 mx-auto grid relative">
-    <img
-      class="mb-3 w-80 h-80 rounded-full shadow-lg mx-auto mt-5 z-0 hover:cursor-pointer object-cover"
-      src={pictureSrc}
-      alt="Group Photo"
-      bind:this={image}
-      on:click={() => {
-        document.getElementById("file-upload").click();
-      }}
-    />
-    <input
-      id="file-upload"
-      type="file"
-      accept=".jpg, .png, .jpeg, .gif"
-      title=""
-      class="mb-3 w-80 h-80 rounded-full mt-5 absolute left-1/2 transform -translate-x-1/2 z-10 text-transparent hover:cursor-pointer bg-transparent hidden"
-      bind:this={input}
-      on:change={onChange}
-    />
+    <div>
+      <img
+        class="mb-3 w-80 h-80 rounded-full shadow-lg mx-auto mt-5 z-0 hover:cursor-pointer object-cover"
+        src={pictureSrc}
+        alt="Group Photo"
+        bind:this={image}
+        on:click={() => {
+          document.getElementById("file-upload").click();
+        }}
+      />
+      <input
+        id="file-upload"
+        type="file"
+        accept=".jpg, .png, .jpeg, .gif"
+        title=""
+        class="mb-3 w-80 h-80 rounded-full mt-5 absolute left-1/2 transform -translate-x-1/2 z-10 text-transparent hover:cursor-pointer bg-transparent hidden"
+        bind:this={input}
+        on:change={onChange}
+      />
+      <div class="absolute right-10 top-10">
+        <button
+          type="button"
+          class="text-white bg-red-700 dark:bg-red-600 hover:bg-red-800 dark:hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium transition-shadow rounded-lg text-base px-5 py-2 text-center w-1/10 mx-2"
+        >
+          <FaIcon icon="trash" />&nbsp;&nbsp;Delete Group
+        </button>
+      </div>
+    </div>
     <div
       class="grid justify-self-center mb-5"
       on:click|stopPropagation={() => {
