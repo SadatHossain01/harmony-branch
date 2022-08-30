@@ -10,16 +10,7 @@
 
   export let event: Event;
 
-  let urgent: boolean;
-
   $: daysLeft = remainingDays(datetimeStringToJSDate(event.date, event.time));
-  $: {
-    if (daysLeft <= 2) {
-      urgent = true;
-    } else {
-      urgent = false;
-    }
-  }
 
   let draweropen: boolean = false;
   $: console.log(event.title, draweropen);
