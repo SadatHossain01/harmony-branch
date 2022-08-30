@@ -18,10 +18,7 @@
 
 <svelte:window on:click|stopPropagation={() => (draweropen = false)} />
 
-<li
-  class="mb-10 ml-6 dark:hover:bg-gray-800 rounded-lg p-3 hover:cursor-pointer"
-  on:click|stopPropagation={() => (draweropen = !draweropen)}
->
+<li class="mb-10 ml-6 dark:hover:bg-gray-800 rounded-lg p-3">
   <span
     class="flex absolute -left-3 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900"
   >
@@ -42,7 +39,12 @@
         class="bg-green-100 text-green-800 font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-300 dark:text-green-900 ml-3"
         >This Week</span
       >
-    {:else}{/if}
+    {/if}
+    <button
+      type="button"
+      class="absolute right-1/4 text-white bg-blue-700 dark:bg-blue-600 hover:bg-blue-800 dark:hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center w-1/10"
+      on:click|stopPropagation={() => (draweropen = true)}>Edit</button
+    >
   </h3>
   <time
     class="block mb-2 text-base leading-none text-gray-400 dark:text-gray-500"
