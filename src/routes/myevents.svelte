@@ -16,6 +16,7 @@
       time: "13:59",
       date: "2022-09-01",
       description: "This is event 1",
+      draweropen: false,
     },
     {
       id: 2,
@@ -23,6 +24,7 @@
       time: "13:59",
       date: "2022-09-05",
       description: "This is event 2",
+      draweropen: false,
     },
     {
       id: 3,
@@ -30,6 +32,7 @@
       time: "13:59",
       date: "2022-09-10",
       description: "This is event 3",
+      draweropen: false,
     },
     {
       id: 4,
@@ -37,6 +40,7 @@
       time: "13:59",
       date: "2022-09-10",
       description: "This is event 4",
+      draweropen: false,
     },
     {
       id: 5,
@@ -44,6 +48,7 @@
       time: "13:59",
       date: "2022-09-10",
       description: "This is event 5",
+      draweropen: false,
     },
     {
       id: 6,
@@ -51,6 +56,7 @@
       time: "13:59",
       date: "2022-09-10",
       description: "This is event 6",
+      draweropen: false,
     },
     {
       id: 7,
@@ -58,6 +64,7 @@
       time: "13:59",
       date: "2022-09-10",
       description: "This is event 7",
+      draweropen: false,
     },
   ];
 
@@ -93,7 +100,6 @@
   }
 
   // $: if (start_date) console.log(start_date);
-  let draweropen: boolean = false;
 
   let newEvent: Event = {
     id: 0,
@@ -101,6 +107,7 @@
     time: "",
     date: "",
     description: "",
+    draweropen: false,
   };
   $: {
     console.log(
@@ -116,7 +123,7 @@
   <title>Events</title>
 </svelte:head>
 
-<svelte:window on:click|stopPropagation={() => (draweropen = false)} />
+<svelte:window on:click|stopPropagation={() => (newEvent.draweropen = false)} />
 
 <div class="bg-slate-900 py-5 pl-10 min-h-screen">
   <div class="flex items-center pb-10 gap-5">
@@ -167,7 +174,8 @@
       data-drawer-target="drawer-form"
       data-drawer-show="drawer-form"
       aria-controls="drawer-form"
-      on:click|stopPropagation={() => (draweropen = !draweropen)}
+      on:click|stopPropagation={() =>
+        (newEvent.draweropen = !newEvent.draweropen)}
     >
       <FaIcon type="regular" icon="plus" className="text-xl" />
     </button>
@@ -181,7 +189,7 @@
     </ol>
   </div>
 
-  <Drawer transition_axis="-x" bind:open={draweropen}>
+  <Drawer transition_axis="-x" bind:open={newEvent.draweropen}>
     <!-- drawer component -->
     <div slot="body">
       <h5
@@ -256,7 +264,7 @@
         class="text-white justify-center flex items-center bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
         on:click|stopPropagation={() => {
           // do stuffs
-          draweropen = false;
+          newEvent.draweropen = false;
         }}
         ><svg
           class="w-5 h-5 mr-2"

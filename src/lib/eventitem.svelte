@@ -10,26 +10,15 @@
 
   export let event: Event;
 
-  let urgent: boolean;
-
   $: daysLeft = remainingDays(datetimeStringToJSDate(event.date, event.time));
-  $: {
-    if (daysLeft <= 2) {
-      urgent = true;
-    } else {
-      urgent = false;
-    }
-  }
-
-  let draweropen: boolean = false;
-  $: console.log(event.title, draweropen);
+  $: console.log(event.title, event.draweropen);
 </script>
 
-<svelte:window on:click|stopPropagation={() => (draweropen = false)} />
+<svelte:window on:click|stopPropagation={() => (event.draweropen = false)} />
 
 <li
   class="mb-10 ml-6 dark:hover:bg-gray-800 rounded-lg p-3 hover:cursor-pointer"
-  on:click|stopPropagation={() => (draweropen = !draweropen)}
+  on:click|stopPropagation={() => (event.draweropen = !event.draweropen)}
 >
   <span
     class="flex absolute -left-3 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900"
@@ -63,7 +52,7 @@
   </p>
 </li>
 
-<Drawer transition_axis="-x" bind:open={draweropen}>
+<Drawer transition_axis="-x" bind:open={event.draweropen}>
   <!-- drawer component -->
   <div slot="body">
     <h5
@@ -138,7 +127,7 @@
       class="text-white justify-center flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-3 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 w-full"
       on:click|stopPropagation={() => {
         // do stuffs
-        draweropen = false;
+        event.draweropen = false;
       }}
       ><svg
         class="w-5 h-5 mr-2"
@@ -158,7 +147,7 @@
       class="text-white justify-center flex items-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800 w-full"
       on:click|stopPropagation={() => {
         // do stuffs
-        draweropen = false;
+        event.draweropen = false;
       }}
       ><svg
         class="w-5 h-5 mr-2"

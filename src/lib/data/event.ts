@@ -4,6 +4,7 @@ export interface Event {
   description: string;
   time: string;
   date: string;
+  draweropen: boolean;
 }
 
 const months = [
