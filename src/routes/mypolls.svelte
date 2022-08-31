@@ -1,11 +1,21 @@
 <script lang="ts">
   import ShowPollitem from "../lib/showpollitem.svelte";
+  import {
+    addPoll,
+    getPolls,
+    removePoll,
+    type Poll,
+    type PollEvent,
+    type SendPoll,
+  } from "../lib/data/polls";
   import { fade } from "svelte/transition";
   import { flip } from "svelte/animate";
   import Drawer from "../lib/drawer.svelte";
   import FaIcon from "../lib/faIcon.svelte";
-  import type { Poll } from "../lib/data/polls";
-  import { beforeUpdate, afterUpdate } from "svelte";
+  import { beforeUpdate, afterUpdate, onMount, onDestroy } from "svelte";
+  import { current_group } from "../lib/stores/groups";
+  import Loader from "../lib/loader.svelte";
+  import { notifyTarget } from "../lib/events/notifytarget";
 
   let div;
   let autoscroll;
@@ -20,290 +30,111 @@
     if (autoscroll) div.scrollTo(0, div.scrollHeight);
   });
 
-  //declare an array of 5 Poll Objects
-  let polls: Poll[] = [
-    {
-      id: "1",
-      title:
-        "Poll 11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
-      options: [
-        {
-          pollid: "1",
-          optionid: "1",
-          option_title:
-            "Option 11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
-          description: "This is some option that you may check out",
-          vote_count: 5,
-          width: 0,
-        },
-        {
-          pollid: "1",
-          optionid: "2",
-          option_title: "Option 2",
-          description: "This is some option that you may check out",
-          vote_count: 5,
-          width: 0,
-        },
-        {
-          pollid: "1",
-          optionid: "3",
-          option_title: "Option 3",
-          description: "This is some option that you may check out",
-          vote_count: 10,
-          width: 0,
-        },
-      ],
-      totalvote: 0,
-      votedOption: "-1",
-    },
-    {
-      id: "2",
-      title: "Poll 2",
-      options: [
-        {
-          pollid: "2",
-          optionid: "1",
-          option_title: "Option 1",
-          description: "This is some option that you may check out",
-          vote_count: 4,
-          width: 0,
-        },
-        {
-          pollid: "2",
-          optionid: "2",
-          option_title: "Option 2",
-          description: "This is some option that you may check out",
-          vote_count: 0,
-          width: 0,
-        },
-        {
-          pollid: "2",
-          optionid: "3",
-          option_title: "Option 3",
-          description: "This is some option that you may check out",
-          vote_count: 1,
-          width: 0,
-        },
-      ],
-      totalvote: 0,
-      votedOption: "-1",
-    },
-    {
-      id: "3",
-      title: "Poll 3",
-      options: [
-        {
-          pollid: "3",
-          optionid: "1",
-          option_title: "Option 1",
-          description: "This is some option that you may check out",
-          vote_count: 8,
-          width: 0,
-        },
-        {
-          pollid: "3",
-          optionid: "2",
-          option_title: "Option 2",
-          description: "This is some option that you may check out",
-          vote_count: 9,
-          width: 0,
-        },
-        {
-          pollid: "3",
-          optionid: "3",
-          option_title: "Option 3",
-          description: "This is some option that you may check out",
-          vote_count: 1,
-          width: 0,
-        },
-      ],
-      totalvote: 0,
-      votedOption: "-1",
-    },
-    {
-      id: "4",
-      title: "Poll 4",
-      options: [
-        {
-          pollid: "4",
-          optionid: "1",
-          option_title: "Option 1",
-          description: "This is some option that you may check out",
-          vote_count: 1,
-          width: 0,
-        },
-        {
-          pollid: "4",
-          optionid: "2",
-          option_title: "Option 2",
-          description: "This is some option that you may check out",
-          vote_count: 11,
-          width: 0,
-        },
-        {
-          pollid: "4",
-          optionid: "3",
-          option_title: "Option 3",
-          description: "This is some option that you may check out",
-          vote_count: 5,
-          width: 0,
-        },
-      ],
-      totalvote: 0,
-      votedOption: "-1",
-    },
-    {
-      id: "5",
-      title:
-        "Poll 555555555555555555555555555555555555555555555555555555555555555555555555555555",
-      options: [
-        {
-          pollid: "5",
-          optionid: "1",
-          option_title: "Option 111111111111111111",
-          description: "This is some option that you may check out",
-          vote_count: 1,
-          width: 0,
-        },
-        {
-          pollid: "5",
-          optionid: "2",
-          option_title: "Option 2",
-          description: "This is some option that you may check out",
-          vote_count: 0,
-          width: 0,
-        },
-        {
-          pollid: "5",
-          optionid: "3",
-          option_title: "Option 3",
-          description: "This is some option that you may check out",
-          vote_count: 0,
-          width: 0,
-        },
-        {
-          pollid: "5",
-          optionid: "4",
-          option_title: "Option 4",
-          description: "This is some option that you may check out",
-          vote_count: 0,
-          width: 0,
-        },
-        {
-          pollid: "5",
-          optionid: "5",
-          option_title: "Option 5",
-          description: "This is some option that you may check out",
-          vote_count: 0,
-          width: 0,
-        },
-        {
-          pollid: "5",
-          optionid: "6",
-          option_title: "Option 6",
-          description: "This is some option that you may check out",
-          vote_count: 0,
-          width: 0,
-        },
-        {
-          pollid: "5",
-          optionid: "7",
-          option_title: "Option 7",
-          description: "This is some option that you may check out",
-          vote_count: 0,
-          width: 0,
-        },
-        {
-          pollid: "5",
-          optionid: "8",
-          option_title: "Option 8",
-          description:
-            "This is some option that you may check out. This is some option that you may check out. This is some option that you may check out. This is some option that you may check out. This is some option that you may check out.",
-          vote_count: 0,
-          width: 0,
-        },
-      ],
-      totalvote: 0,
-      votedOption: "-1",
-    },
-  ];
+  const handleEvent = (e: CustomEvent) => {
+    const event: PollEvent = e.detail;
 
-  polls.forEach((p) => {
-    p.totalvote = 0;
-    for (let i = 0; i < p.options.length; i++) {
-      p.totalvote += p.options[i].vote_count;
+    if ($current_group == undefined || event.group_id != $current_group.id) {
+      return;
     }
+
+    if (event.op === "add") {
+      polls = [event.poll, ...polls];
+    } else if (event.op === "delete") {
+      polls = polls.filter((poll) => poll.id != event.id);
+    } else if (event.op === "update") {
+      let i = polls.findIndex((p) => event.id === p.id);
+      if (i >= 0) {
+        let lastVote = polls[i].voted_option;
+        polls[i] = event.poll;
+        if (lastVote !== "-1" && polls[i].voted_option === "-1") {
+          // this is hacky way of handling the issue with event notifications
+          // there is no way for the server to distinguish between clients receiving the same notification
+          polls[i].voted_option = lastVote;
+        }
+        polls = polls;
+      } else {
+        polls = [event.poll, ...polls];
+      }
+    }
+  };
+
+  onMount(() => {
+    notifyTarget.addEventListener("poll", handleEvent);
   });
 
-  function deletePoll(id: string) {
-    console.log("got delete request for poll with id: " + id);
-    const index = polls.findIndex((p) => p.id === id);
-    console.log(index);
-    if (index === -1) return;
-    polls.splice(index, 1);
-    polls = polls;
+  onDestroy(() => {
+    notifyTarget.removeEventListener("poll", handleEvent);
+  });
+
+  //declare an array of 5 Poll Objects
+  let polls: Poll[];
+
+  const loadPolls = async (gid: string) => {
+    try {
+      polls = await getPolls(gid);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  let loadPromise;
+
+  $: if ($current_group) {
+    loadPromise = loadPolls($current_group.id);
   }
 
-  let newPoll: Poll = {
-    id: "",
-    title: "",
-    options: [],
-    totalvote: 0,
-    votedOption: "-1",
+  const deletePoll = async (id: string) => {
+    try {
+      await removePoll(id);
+    } catch (e) {
+      console.log(e);
+    }
   };
+
+  let emptyPoll: SendPoll = {
+    title: "New Poll",
+    options: [],
+  };
+
+  let newPoll: SendPoll = structuredClone(emptyPoll);
 
   let draweropen: boolean = false;
 
-  function removeOption(id: string) {
-    //decrement the count of votes of the options which have been removed
-    newPoll.options.forEach((option) => {
-      if (option.optionid === id) {
-        newPoll.totalvote -= option.vote_count;
-      }
-    });
+  const removeOption = (index: number) => {
     //remove the option from the poll
     newPoll.options = newPoll.options.filter((option) => {
-      return option.optionid !== id;
+      return option.index !== index;
     });
-    if (newPoll.votedOption === id) {
-      newPoll.votedOption = "-1";
-    }
-  }
+  };
 
-  function addNewOption() {
+  const addNewOption = () => {
     //add an empty option to the poll
     //take the maximum of all existing and add 1 to that
     console.log("add new option");
     let max = 0;
     newPoll.options.forEach((option) => {
-      if (Number(option.optionid) > max) max = Number(option.optionid);
-    }),
-      max++;
+      max = Math.max(max, option.index);
+    });
+    max++;
     newPoll.options.push({
-      pollid: newPoll.id,
-      optionid: max.toString(),
-      option_title: "New Option",
+      index: max,
+      title: "New Option",
       description: "",
-      vote_count: 0,
-      width: 0,
     });
     newPoll.options = newPoll.options;
-  }
+  };
 
-  function confirmupdate() {
+  const submitPoll = async () => {
     console.log("confirm update");
-    //copy newPoll into poll
-    newPoll = {
-      id: newPoll.id,
-      title: newPoll.title,
-      // description: newPoll.description,
-      options: [...newPoll.options],
-      totalvote: newPoll.totalvote,
-      votedOption: newPoll.votedOption,
-    };
-    // poll = temp;
-    //update in database as well
-  }
+    try {
+      let id = await addPoll(newPoll, $current_group.id);
+      console.log("new poll: " + id);
+      draweropen = false;
+      newPoll = structuredClone(emptyPoll);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 </script>
 
 <svelte:head>
@@ -314,9 +145,15 @@
 
 <div class="bg-slate-900 min-h-screen">
   <div class="w-3/4 py-5 flex-1 mx-auto" bind:this={div}>
-    {#each polls as poll}
-      <ShowPollitem {poll} {deletePoll} />
-    {/each}
+    {#if loadPromise}
+      {#await loadPromise}
+        <Loader />
+      {:then}
+        {#each polls as poll (poll.id)}
+          <ShowPollitem {poll} {deletePoll} />
+        {/each}
+      {/await}
+    {/if}
   </div>
   <button
     class="h-14 w-14 fixed bottom-12 right-12 z-10 shadow-xl text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-full lg:ml-40 ml-10 text-sm mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
@@ -364,7 +201,7 @@
           bind:value={newPoll.title}
         />
       </div>
-      {#each newPoll.options as option (Number(option.optionid))}
+      {#each newPoll.options as option (Number(option.index))}
         <div
           animate:flip
           class="bg-gray-700 rounded-lg p-2 my-2"
@@ -383,7 +220,7 @@
                 .options.length > 1 &&
                 'dark:hover:bg-gray-800 dark:hover:text-white'}"
               type="button"
-              on:click={() => removeOption(option.optionid)}
+              on:click={() => removeOption(option.index)}
               disabled={newPoll.options.length === 1}
             >
               <FaIcon
@@ -398,7 +235,7 @@
               type="text"
               id="title"
               class="bg-gray-50 my-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              bind:value={option.option_title}
+              bind:value={option.title}
               required
             />
           </div>
@@ -421,16 +258,16 @@
       <div class="flex justify-center mx-auto my-5">
         <button
           type="button"
-          class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+          class="w-full text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
           on:click={() => addNewOption()}>Add Option</button
         >
       </div>
       <button
+        disabled={newPoll.options.length === 0}
         type="submit"
         class="text-white justify-center flex items-center bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
         on:click|stopPropagation={() => {
-          // do stuffs
-          draweropen = false;
+          submitPoll();
         }}
         ><svg
           class="w-5 h-5 mr-2"
